@@ -1,0 +1,11 @@
+name: infom-obs
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10.16
+  - pip
+  - glew
+  - mesalib
+  - pip:
+      - -r requirements.txt

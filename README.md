@@ -25,6 +25,24 @@ Intention-Conditioned Flow Occupancy Models (InFOM) is a latent variable model f
 
 This repository contains code for running the InFOM algorithm and eight baselines.
 
+# Project Note
+
+This repository is a hybrid fork of the upstream [InFOM](https://github.com/chongyi-zheng/infom) codebase for a class project on learning latent intent from third-person observation for first-person reinforcement learning.
+
+Bootstrap in this fork is intentionally conservative:
+
+- keep the upstream JAX/Flax implementation intact where possible
+- preserve upstream provenance with `upstream` remote tracking
+- add project-owned setup and design notes under `docs/`
+- stage the first extension around a self third-person bridge before removing that bridge in later ablations
+
+Relevant project materials:
+
+- `docs/proposal.pdf`
+- `docs/check-in.pdf`
+- `docs/project-bootstrap.md`
+- `docs/design/phase1-self-third-person-bridge.md`
+
 # Installation
 
 ## Option 1 (recommended): conda setup script
@@ -40,22 +58,18 @@ Then activate the environment:
 conda activate infom
 ```
 
-## Option 2: manual setup
+## Option 2: tracked project environment
 
-1. Create an Anaconda environment: `conda create -n infom python=3.10.16 -y`
-2. Activate the environment: `conda activate infom`
-3. Install the dependencies:
+1. Create the environment: `conda env create -f environment.yml`
+2. Activate it: `conda activate infom-obs`
+3. Export runtime variables:
     ```
-    conda install -c conda-forge glew -y
-    conda install -c conda-forge mesalib -y
-    pip install -r requirements.txt
-    ```
-4. Export environment variables
-    ```
-    export PYTHONPATH=path_to_infom_dir
+    export PYTHONPATH=$(pwd)
     export MUJOCO_GL=egl
     export PYOPENGL_PLATFORM=egl
     ```
+
+This mirrors the upstream dependency set while keeping a project-specific environment name and checked-in environment spec.
 
 # Generating datasets
 
