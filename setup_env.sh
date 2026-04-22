@@ -45,4 +45,4 @@ PY
 
 echo "[setup] done"
 echo "[setup] run: conda activate ${CONDA_ENV_NAME}"
-echo "[setup] if this env already existed, run: conda deactivate && conda activate ${CONDA_ENV_NAME}"
+echo "[setup] if this env already existed, run: conda deactivate && conda activate ${CONDA_ENV_NAME} to apply updated env vars"
