@@ -34,17 +34,17 @@ def load_dataset(
             raise KeyError(f'Missing keys in bridge dataset {dataset_path}: {missing_keys}')
 
         dataset = dict(
-            observations=np.array(file['observations'], dtype=ob_dtype),
-            third_person_observations=np.array(file['third_person_observations'], dtype=np.uint8),
-            actions=np.array(file['actions'], dtype=action_dtype),
-            terminals=np.array(file['terminals'], dtype=np.float32),
-            qpos=np.array(file['qpos'], dtype=np.float32),
-            qvel=np.array(file['qvel'], dtype=np.float32),
-            episode_ids=np.array(file['episode_ids'], dtype=np.int32),
-            timesteps=np.array(file['timesteps'], dtype=np.int32),
+            observations=file['observations'][...].astype(ob_dtype, copy=False),
+            third_person_observations=file['third_person_observations'][...].astype(np.uint8, copy=False),
+            actions=file['actions'][...].astype(action_dtype, copy=False),
+            terminals=file['terminals'][...].astype(np.float32, copy=False),
+            qpos=file['qpos'][...].astype(np.float32, copy=False),
+            qvel=file['qvel'][...].astype(np.float32, copy=False),
+            episode_ids=file['episode_ids'][...].astype(np.int32, copy=False),
+            timesteps=file['timesteps'][...].astype(np.int32, copy=False),
         )
         if 'button_states' in file:
-            dataset['button_states'] = np.array(file['button_states'], dtype=np.int64)
+            dataset['button_states'] = file['button_states'][...].astype(np.int64, copy=False)
 
     if compact_dataset:
         new_terminals = np.concatenate([dataset['terminals'][1:], [1.0]])
