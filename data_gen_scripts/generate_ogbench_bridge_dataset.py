@@ -44,8 +44,16 @@ flags.DEFINE_integer('max_episode_steps', 1001, 'Maximum episode length.')
 def default_save_path():
     dataset_dir = os.path.expanduser(FLAGS.dataset_dir)
     os.makedirs(dataset_dir, exist_ok=True)
-    dataset_stem = FLAGS.env_name.removesuffix('-v0')
-    return os.path.join(dataset_dir, f'bridge-{dataset_stem}-{FLAGS.dataset_type}-v0.npz')
+    if '-' in FLAGS.env_name:
+        dataset_stem, dataset_version = FLAGS.env_name.rsplit('-', 1)
+    else:
+        dataset_stem, dataset_version = FLAGS.env_name, 'v0'
+    if not dataset_version.startswith('v'):
+        dataset_stem, dataset_version = FLAGS.env_name, 'v0'
+    return os.path.join(
+        dataset_dir,
+        f'bridge-{dataset_stem}-{FLAGS.dataset_type}-{dataset_version}.npz',
+    )
 
 
 def build_oracles(env):
