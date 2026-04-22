@@ -1,23 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PYTHON_BIN=${PYTHON_BIN:-python3}
-VENV_DIR=${VENV_DIR:-.venv}
+if ! command -v conda >/dev/null 2>&1; then
+  echo "[setup] error: conda is required but was not found in PATH"
+  exit 1
+fi
 
-echo "[setup] creating virtualenv at ${VENV_DIR} using ${PYTHON_BIN}"
-"${PYTHON_BIN}" -m venv "${VENV_DIR}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR=${REPO_DIR:-"${SCRIPT_DIR}"}
+CONDA_ENV_NAME=${CONDA_ENV_NAME:-infom}
+PYTHON_VERSION=${PYTHON_VERSION:-3.10.16}
 
-PIP_BIN="${VENV_DIR}/bin/pip"
-PY_BIN="${VENV_DIR}/bin/python"
+echo "[setup] creating conda env ${CONDA_ENV_NAME} (python=${PYTHON_VERSION})"
+conda create -n "${CONDA_ENV_NAME}" "python=${PYTHON_VERSION}" -y
 
-echo "[setup] upgrading pip"
-"${PIP_BIN}" install --upgrade pip
+echo "[setup] installing conda dependencies"
+conda install -n "${CONDA_ENV_NAME}" -c conda-forge glew -y
+conda install -n "${CONDA_ENV_NAME}" -c conda-forge mesalib -y
 
 echo "[setup] installing project dependencies"
-"${PIP_BIN}" install -r requirements.txt
+conda run -n "${CONDA_ENV_NAME}" python -m pip install --upgrade pip
+conda run -n "${CONDA_ENV_NAME}" python -m pip install -r "${REPO_DIR}/requirements.txt"
+
+echo "[setup] configuring environment variables"
+conda env config vars set -n "${CONDA_ENV_NAME}" \
+  PYTHONPATH="${REPO_DIR}" \
+  MUJOCO_GL=egl \
+  PYOPENGL_PLATFORM=egl
 
 echo "[setup] verifying core imports"
-"${PY_BIN}" - <<'PY'
+conda run -n "${CONDA_ENV_NAME}" python - <<'PY'
 from importlib.metadata import version
 
 import jax
@@ -32,3 +44,5 @@ print('ogbench', version('ogbench'))
 PY
 
 echo "[setup] done"
+echo "[setup] run: conda activate ${CONDA_ENV_NAME}"
+echo "[setup] if this env already existed, run: conda deactivate && conda activate ${CONDA_ENV_NAME}"

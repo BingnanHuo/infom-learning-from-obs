@@ -27,13 +27,18 @@ This repository contains code for running the InFOM algorithm and eight baseline
 
 # Installation
 
-## Option 1 (recommended): one-command setup script
+## Option 1 (recommended): conda setup script
 
 ```bash
 ./setup_env.sh
 ```
 
-This creates a `.venv`, installs Python dependencies from `requirements.txt`, and verifies imports for core packages.
+This creates a Conda environment (`infom` by default) with Python 3.10.16, installs dependencies, configures required environment variables (`PYTHONPATH`, `MUJOCO_GL`, `PYOPENGL_PLATFORM`), and verifies imports for core packages.
+
+Then activate the environment:
+```bash
+conda activate infom
+```
 
 ## Option 2: manual setup
 
