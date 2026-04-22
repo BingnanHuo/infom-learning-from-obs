@@ -1,6 +1,6 @@
 # Project Bootstrap
 
-Bootstrapped on April 21, 2026 in the worktree `/home/nick/infom-learning-from-obs`.
+Bootstrapped on April 21, 2026 in the repository worktree `<repo-root>`.
 
 ## Repository State
 
