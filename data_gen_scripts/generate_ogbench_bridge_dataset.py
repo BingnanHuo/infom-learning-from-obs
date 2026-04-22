@@ -1,5 +1,6 @@
 from collections import defaultdict
 import os
+import re
 import sys
 
 import gymnasium
@@ -44,12 +45,12 @@ flags.DEFINE_integer('max_episode_steps', 1001, 'Maximum episode length.')
 def default_save_path():
     dataset_dir = os.path.expanduser(FLAGS.dataset_dir)
     os.makedirs(dataset_dir, exist_ok=True)
-    if '-' in FLAGS.env_name:
-        dataset_stem, dataset_version = FLAGS.env_name.rsplit('-', 1)
+    version_match = re.match(r'^(?P<stem>.+)-(?P<version>v\d+)$', FLAGS.env_name)
+    if version_match is None:
+        dataset_stem, dataset_version = FLAGS.env_name, 'v0'
     else:
-        dataset_stem, dataset_version = FLAGS.env_name, 'v0'
-    if not dataset_version.startswith('v'):
-        dataset_stem, dataset_version = FLAGS.env_name, 'v0'
+        dataset_stem = version_match.group('stem')
+        dataset_version = version_match.group('version')
     return os.path.join(
         dataset_dir,
         f'bridge-{dataset_stem}-{FLAGS.dataset_type}-{dataset_version}.npz',
