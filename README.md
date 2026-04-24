@@ -51,7 +51,7 @@ Relevant project materials:
 ./setup_env.sh
 ```
 
-This creates a Conda environment (`infom` by default) with Python 3.10.16, installs dependencies, configures required environment variables (`PYTHONPATH`, `MUJOCO_GL`, `PYOPENGL_PLATFORM`), and verifies imports for core packages.
+This creates or reuses a Conda environment (`infom` by default) with Python 3.10.16, installs dependencies, configures required environment variables (`PYTHONPATH`, `MUJOCO_GL`, `PYOPENGL_PLATFORM`), and verifies imports for core packages.
 
 Then activate the environment:
 ```bash

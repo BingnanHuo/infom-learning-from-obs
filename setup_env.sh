@@ -11,8 +11,12 @@ REPO_DIR=${REPO_DIR:-"${SCRIPT_DIR}"}
 CONDA_ENV_NAME=${CONDA_ENV_NAME:-infom}
 PYTHON_VERSION=${PYTHON_VERSION:-3.10.16}
 
-echo "[setup] creating conda env ${CONDA_ENV_NAME} (python=${PYTHON_VERSION})"
-conda create -n "${CONDA_ENV_NAME}" "python=${PYTHON_VERSION}" -y
+if conda run -n "${CONDA_ENV_NAME}" python --version >/dev/null 2>&1; then
+  echo "[setup] reusing existing conda env ${CONDA_ENV_NAME}"
+else
+  echo "[setup] creating conda env ${CONDA_ENV_NAME} (python=${PYTHON_VERSION})"
+  conda create -n "${CONDA_ENV_NAME}" "python=${PYTHON_VERSION}" -y
+fi
 
 echo "[setup] installing conda dependencies"
 conda install -n "${CONDA_ENV_NAME}" -c conda-forge glew -y
