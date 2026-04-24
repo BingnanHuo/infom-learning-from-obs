@@ -25,6 +25,7 @@ if REPO_ROOT not in sys.path:
 from envs.bridge_wrappers import ThirdPersonRenderWrapper
 
 FLAGS = flags.FLAGS
+DATASET_TYPE_TOKENS = {'play', 'noisy'}
 
 flags.DEFINE_integer('seed', 0, 'Random seed.')
 flags.DEFINE_string('env_name', 'cube-single-v0', 'State-control OGBench environment name.')
@@ -51,9 +52,21 @@ def default_save_path():
     else:
         dataset_stem = version_match.group('stem')
         dataset_version = version_match.group('version')
+    dataset_stem_parts = dataset_stem.split('-')
+    if 'singletask' in dataset_stem_parts:
+        # Singletask names are virtual loader names; the physical file is the base dataset.
+        singletask_pos = dataset_stem_parts.index('singletask')
+        if singletask_pos > 0 and dataset_stem_parts[singletask_pos - 1] in DATASET_TYPE_TOKENS:
+            dataset_stem_parts[singletask_pos - 1] = FLAGS.dataset_type
+            dataset_stem_parts = dataset_stem_parts[:singletask_pos]
+        else:
+            dataset_stem_parts = dataset_stem_parts[:singletask_pos] + [FLAGS.dataset_type]
+        dataset_stem = '-'.join(dataset_stem_parts)
+    else:
+        dataset_stem = f'{dataset_stem}-{FLAGS.dataset_type}'
     return os.path.join(
         dataset_dir,
-        f'bridge-{dataset_stem}-{FLAGS.dataset_type}-{dataset_version}.npz',
+        f'bridge-{dataset_stem}-{dataset_version}.npz',
     )
 
 
@@ -164,6 +177,7 @@ def finalize_split(dataset, stop_idx):
 
 def main(_):
     assert FLAGS.dataset_type in ['play', 'noisy']
+    np.random.seed(FLAGS.seed)
 
     base_env = gymnasium.make(
         FLAGS.env_name,
