@@ -57,6 +57,30 @@ def default_save_path():
     )
 
 
+def normalize_npz_path(path):
+    path = os.path.expanduser(path)
+    _, ext = os.path.splitext(path)
+    if ext == '':
+        return f'{path}.npz'
+    if ext != '.npz':
+        raise ValueError(f'Expected an .npz output path, got: {path}')
+    return path
+
+
+def resolve_output_paths():
+    train_path = normalize_npz_path(FLAGS.save_path) if FLAGS.save_path else default_save_path()
+    train_root, _ = os.path.splitext(train_path)
+    val_path = f'{train_root}-val.npz'
+    output_dir = os.path.dirname(train_path)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
+    return train_path, val_path
+
+
+def reset_seed_for_attempt(ep_idx, retry_idx, num_episodes):
+    return FLAGS.seed + ep_idx + retry_idx * num_episodes
+
+
 def build_oracles(env):
     oracle_type = 'plan' if FLAGS.dataset_type == 'play' else 'markov'
     if 'cube' in FLAGS.env_name:
@@ -160,9 +184,12 @@ def main(_):
     num_train_episodes = FLAGS.num_episodes
     num_val_episodes = max(1, FLAGS.num_episodes // 10)
 
-    for ep_idx in trange(num_train_episodes + num_val_episodes):
+    total_episodes = num_train_episodes + num_val_episodes
+
+    for ep_idx in trange(total_episodes):
+        retry_idx = 0
         while True:
-            observation, info = env.reset(seed=FLAGS.seed + ep_idx)
+            observation, info = env.reset(seed=reset_seed_for_attempt(ep_idx, retry_idx, total_episodes))
             third_person_observation = info['third_person_observation']
 
             if 'single' in FLAGS.env_name:
@@ -242,6 +269,7 @@ def main(_):
                 print('Unhealthy episode, retrying...', flush=True)
                 for key in dataset.keys():
                     dataset[key] = dataset[key][:-timestep]
+                retry_idx += 1
             else:
                 break
 
@@ -251,8 +279,7 @@ def main(_):
 
     print('Total steps:', total_steps)
 
-    train_path = FLAGS.save_path or default_save_path()
-    val_path = train_path.replace('.npz', '-val.npz')
+    train_path, val_path = resolve_output_paths()
 
     train_dataset = finalize_split(dataset, total_train_steps)
     val_dataset = {}
