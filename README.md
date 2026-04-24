@@ -327,7 +327,6 @@ python main.py --env_name=visual-cube-single-play-singletask-task1-v0 --pretrain
 python main.py --env_name={cheetah_run, cheetah_run_backward, cheetah_walk, cheetah_walk_backward} --agent=agents/hilp.py --agent.alpha=1
 # HILP + IQL on OGBench cube single {task 1, task 2, task 3, task 4, task 5}
 python main.py --env_name={cube-single-play-singletask-task1-v0, cube-single-play-singletask-task2-v0, cube-single-play-singletask-task3-v0, cube-single-play-singletask-task4-v0, cube-single-play-singletask-task5-v0} --agent=agents/hilp.py --agent.alpha=1
-```
 
 # IQL on ExORL cheetah {run, run backward, walk, walk backward}
 python main.py --env_name={cheetah_run, cheetah_run_backward, cheetah_walk, cheetah_walk_backward} --agent=agents/iql.py --agent.alpha=1
