@@ -47,9 +47,10 @@ def load_dataset(
             dataset['button_states'] = file['button_states'][...].astype(np.int64, copy=False)
 
     if compact_dataset:
-        new_terminals = np.concatenate([dataset['terminals'][1:], [1.0]])
-        dataset['terminals'] = np.minimum(dataset['terminals'] + new_terminals, 1.0).astype(np.float32)
-        dataset['valids'] = 1.0 - dataset['terminals']
+        original_terminals = dataset['terminals']
+        new_terminals = np.concatenate([original_terminals[1:], [1.0]])
+        dataset['valids'] = 1.0 - original_terminals
+        dataset['terminals'] = np.minimum(original_terminals + new_terminals, 1.0).astype(np.float32)
         return dataset
 
     original_terminals = dataset['terminals']
