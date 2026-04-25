@@ -45,7 +45,20 @@ Relevant project materials:
 
 # Installation
 
-For this fork, the tracked bootstrap path is:
+## Option 1 (recommended): conda setup script
+
+```bash
+./setup_env.sh
+```
+
+This creates or reuses a Conda environment (`infom` by default) with Python 3.10.16, installs dependencies, configures required environment variables (`PYTHONPATH`, `MUJOCO_GL`, `PYOPENGL_PLATFORM`), and verifies imports for core packages.
+
+Then activate the environment:
+```bash
+conda activate infom
+```
+
+## Option 2: tracked project environment
 
 1. Create the environment: `conda env create -f environment.yml`
 2. Activate it: `conda activate infom-obs`

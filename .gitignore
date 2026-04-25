@@ -8,6 +8,7 @@ dist/
 .idea/
 .ruff_cache/
 .vscode/
+.venv/
 .pytest_cache/
 exp/
 wandb/
