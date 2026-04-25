@@ -182,40 +182,32 @@ We use the default datasets in OGBench for pre-training. The following datasets 
   - visual-puzzle-4x4-play-v0
   - visual-puzzle-4x4-play-v0-val
 
-We generate fine-tuning datasets using following commands
+We generate fine-tuning datasets using the following commands. Each invocation writes the requested train split and a matching `-val.npz` validation split.
 
 ```
 # cube single
-python data_gen_scripts/generate_manipspace.py --env_name=cube-single-v0 --save_path=~/.ogbench/data/cube-single-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=cube-single-v0 --save_path=~/.ogbench/data/cube-single-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=cube-single-v0 --save_path=~/.ogbench/data/cube-single-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # cube double
-python data_gen_scripts/generate_manipspace.py --env_name=cube-double-v0 --save_path=~/.ogbench/data/cube-double-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=cube-double-v0 --save_path=~/.ogbench/data/cube-double-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=cube-double-v0 --save_path=~/.ogbench/data/cube-double-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # scene
-python data_gen_scripts/generate_manipspace.py --env_name=scene-v0 --save_path=~/.ogbench/data/scene-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=scene-v0 --save_path=~/.ogbench/data/scene-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=scene-v0 --save_path=~/.ogbench/data/scene-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # puzzle 4x4
-python data_gen_scripts/generate_manipspace.py --env_name=puzzle-4x4-v0 --save_path=~/.ogbench/data/puzzle-4x4-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=puzzle-4x4-v0 --save_path=~/.ogbench/data/puzzle-4x4-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=puzzle-4x4-v0 --save_path=~/.ogbench/data/puzzle-4x4-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # visual cube single task 1
-python data_gen_scripts/generate_manipspace.py --env_name=visual-cube-single-v0 --save_path=~/.ogbench/data/visual-cube-single-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=visual-cube-single-v0 --save_path=~/.ogbench/data/visual-cube-single-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=visual-cube-single-v0 --save_path=~/.ogbench/data/visual-cube-single-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # visual cube double task 1
-python data_gen_scripts/generate_manipspace.py --env_name=visual-cube-double-v0 --save_path=~/.ogbench/data/visual-cube-double-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=visual-cube-double-v0 --save_path=~/.ogbench/data/visual-cube-double-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=visual-cube-double-v0 --save_path=~/.ogbench/data/visual-cube-double-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # visual scene task 1
-python data_gen_scripts/generate_manipspace.py --env_name=visual-scene-v0 --save_path=~/.ogbench/data/visual-scene-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=visual-scene-v0 --save_path=~/.ogbench/data/visual-scene-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=visual-scene-v0 --save_path=~/.ogbench/data/visual-scene-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 
 # visual puzzle 4x4 task 1
-python data_gen_scripts/generate_manipspace.py --env_name=visual-puzzle-4x4-v0 --save_path=~/.ogbench/data/visual-puzzle-4x4-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
-python data_gen_scripts/generate_manipspace.py --env_name=visual-puzzle-4x4-v0 --save_path=~/.ogbench/data/visual-puzzle-4x4-play-ft-v0-val.npz --num_episodes=50 --max_episode_steps=1001 --dataset_type=play
+python data_gen_scripts/generate_ogbench_manispace.py --env_name=visual-puzzle-4x4-v0 --save_path=~/.ogbench/data/visual-puzzle-4x4-play-ft-v0.npz --num_episodes=500 --max_episode_steps=1001 --dataset_type=play
 ```
 
 </details>
@@ -267,7 +259,7 @@ python main.py --env_name=visual-cube-single-play-singletask-task1-v0 --pretrain
 # InFOM on OGBench visual cube double task 1
 python main.py --env_name=visual-cube-double-play-singletask-task1-v0 --pretraining_steps=250_000 --finetuning_steps=100_000 --eval_interval=10_000 --save_interval=750_000 --p_aug=0.5 --frame_stack=3 --agent=agents/infom.py --agent.latent_dim=128 --agent.expectile=0.95 --agent.kl_weight=0.01 --agent.alpha=30 --agent.encoder=impala_small
 # InFOM on OGBench visual scene task 1
-python main.py --env_name=visual-scene-play-singletask-task1 --pretraining_steps=250_000 --finetuning_steps=100_000 --eval_interval=10_000 --save_interval=750_000 --p_aug=0.5 --frame_stack=3 --agent=agents/infom.py --agent.latent_dim=128 --agent.expectile=0.99 --agent.kl_weight=0.1 --agent.alpha=300 --agent.encoder=impala_small
+python main.py --env_name=visual-scene-play-singletask-task1-v0 --pretraining_steps=250_000 --finetuning_steps=100_000 --eval_interval=10_000 --save_interval=750_000 --p_aug=0.5 --frame_stack=3 --agent=agents/infom.py --agent.latent_dim=128 --agent.expectile=0.99 --agent.kl_weight=0.1 --agent.alpha=300 --agent.encoder=impala_small
 # InFOM on OGBench visual puzzle 4x4 task 1
 python main.py --env_name=visual-puzzle-4x4-play-singletask-task1-v0 --pretraining_steps=250_000 --finetuning_steps=100_000 --eval_interval=10_000 --save_interval=750_000 --p_aug=0.5 --frame_stack=3 --agent=agents/infom.py --agent.latent_dim=128 --agent.expectile=0.95 --agent.kl_weight=0.1 --agent.alpha=300 --agent.encoder=impala_small
 ```
@@ -326,7 +318,7 @@ python main.py --env_name=visual-cube-single-play-singletask-task1-v0 --pretrain
 # HILP + IQL on ExORL cheetah {run, run backward, walk, walk backward}
 python main.py --env_name={cheetah_run, cheetah_run_backward, cheetah_walk, cheetah_walk_backward} --agent=agents/hilp.py --agent.alpha=1
 # HILP + IQL on OGBench cube single {task 1, task 2, task 3, task 4, task 5}
-python main.py --env_name={cube-single-play-singletask-task1-v0, cube-single-play-singletask-task2-v0, cube-single-play-singletask-task3-v0, cube-single-play-singletask-task4-v0, cube-single-play-singletask-task5-v0} --agent=agents/hilp.py --agent.alp```
+python main.py --env_name={cube-single-play-singletask-task1-v0, cube-single-play-singletask-task2-v0, cube-single-play-singletask-task3-v0, cube-single-play-singletask-task4-v0, cube-single-play-singletask-task5-v0} --agent=agents/hilp.py --agent.alpha=1
 
 # IQL on ExORL cheetah {run, run backward, walk, walk backward}
 python main.py --env_name={cheetah_run, cheetah_run_backward, cheetah_walk, cheetah_walk_backward} --agent=agents/iql.py --agent.alpha=1
