@@ -234,6 +234,25 @@ python data_gen_scripts/generate_manipspace.py --env_name=visual-puzzle-4x4-v0 -
 </details>
 
 
+## OGBench bridge-aware InFOM
+
+The `bridge-*` dataset names use paired ego-state and third-person render files produced by
+`data_gen_scripts/generate_ogbench_bridge_dataset.py`. The policy and evaluator still receive
+the ego-state observation; the auxiliary third-person stream is used only when
+`--agent.bridge_loss_weight` is positive.
+
+Example cube-single setup:
+
+```
+python data_gen_scripts/generate_ogbench_bridge_dataset.py --env_name=cube-single-v0 --dataset_type=play --dataset_dir=~/.ogbench/data --num_episodes=1000
+python data_gen_scripts/generate_ogbench_bridge_dataset.py --env_name=cube-single-v0 --dataset_type=play --save_path=~/.ogbench/data/bridge-cube-single-play-ft-v0.npz --num_episodes=500
+
+python main.py --env_name=bridge-cube-single-play-singletask-task1-v0 --agent=agents/infom.py --agent.expectile=0.95 --agent.kl_weight=0.05 --agent.alpha=30 --agent.bridge_loss_weight=0.1
+```
+
+Use `--dataset_dir=/path/to/data` to point training at bridge files outside the default
+`~/.ogbench/data` directory.
+
 # Running experiments
 
 Check the `agents` folder for available algorithms and default hyperparameters. Here are some example commands to run experiments:
