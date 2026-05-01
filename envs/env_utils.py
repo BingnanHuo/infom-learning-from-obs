@@ -129,7 +129,7 @@ class FrameStackWrapper(gymnasium.Wrapper):
 
 
 def make_env_and_datasets(env_name, frame_stack=None, action_clip_eps=1e-5,
-                          reward_free=False, max_size=np.inf):
+                          reward_free=False, max_size=np.inf, dataset_dir=None):
     """Make Offline RL environment and datasets.
 
     Args:
@@ -138,21 +138,28 @@ def make_env_and_datasets(env_name, frame_stack=None, action_clip_eps=1e-5,
         action_clip_eps: Epsilon for action clipping.
         reward_free: Whether to use reward-free dataset.
         max_size: Maximum size of the dataset.
+        dataset_dir: Optional directory for OGBench dataset files.
 
     Returns:
         A tuple of the environment, evaluation environment, training dataset, and validation dataset.
     """
 
-    if 'singletask' in env_name:
+    if env_name.startswith('bridge-') or 'singletask' in env_name:
         # OGBench.
-        from envs import ogbench_utils
+        if env_name.startswith('bridge-'):
+            from envs import ogbench_bridge_utils as ogbench_utils
+        else:
+            from envs import ogbench_utils
 
         # use separate dataset for fine-tuning
-        if not reward_free:
+        if not reward_free and 'singletask' in env_name:
             splits = env_name.split('-')
             pos = splits.index('singletask')
             env_name = '-'.join(splits[: pos] + ['ft'] + splits[pos:])
-        _, train_dataset, val_dataset = ogbench_utils.make_env_and_datasets(env_name)
+        dataset_kwargs = {}
+        if dataset_dir is not None:
+            dataset_kwargs['dataset_dir'] = dataset_dir
+        _, train_dataset, val_dataset = ogbench_utils.make_env_and_datasets(env_name, **dataset_kwargs)
         if train_dataset['observations'].shape[0] > max_size:
             for k, v in train_dataset.items():
                 train_dataset[k] = v[:max_size]
@@ -160,8 +167,8 @@ def make_env_and_datasets(env_name, frame_stack=None, action_clip_eps=1e-5,
             for k, v in val_dataset.items():
                 val_dataset[k] = v[:max_size]
 
-        env = ogbench_utils.make_env_and_datasets(env_name, env_only=True)
-        eval_env = ogbench_utils.make_env_and_datasets(env_name, env_only=True)
+        env = ogbench_utils.make_env_and_datasets(env_name, env_only=True, **dataset_kwargs)
+        eval_env = ogbench_utils.make_env_and_datasets(env_name, env_only=True, **dataset_kwargs)
         env = EpisodeMonitor(env, filter_regexes=['.*privileged.*', '.*proprio.*'])
         eval_env = EpisodeMonitor(eval_env, filter_regexes=['.*privileged.*', '.*proprio.*'])
 

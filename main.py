@@ -26,6 +26,7 @@ flags.DEFINE_string('wandb_run_group', 'debug', 'Run group.')
 flags.DEFINE_string('wandb_mode', 'online', 'Wandb mode.')
 flags.DEFINE_integer('seed', 0, 'Random seed.')
 flags.DEFINE_string('env_name', 'cube-single-play-singletask-v0', 'Environment (dataset) name.')
+flags.DEFINE_string('dataset_dir', None, 'Optional OGBench dataset directory.')
 flags.DEFINE_string('save_dir', 'exp/', 'Save directory.')
 flags.DEFINE_string('restore_path', None, 'Restore path.')
 flags.DEFINE_integer('restore_epoch', None, 'Restore epoch.')
@@ -70,9 +71,11 @@ def main(_):
     # Make environment and datasets.
     config = FLAGS.agent
     _, _, pretraining_train_dataset, pretraining_val_dataset = make_env_and_datasets(
-        FLAGS.env_name, frame_stack=FLAGS.frame_stack, max_size=FLAGS.pretraining_size, reward_free=True)
+        FLAGS.env_name, frame_stack=FLAGS.frame_stack, max_size=FLAGS.pretraining_size, reward_free=True,
+        dataset_dir=FLAGS.dataset_dir)
     _, eval_env, finetuning_train_dataset, finetuning_val_dataset = make_env_and_datasets(
-        FLAGS.env_name, frame_stack=FLAGS.frame_stack, max_size=FLAGS.finetuning_size, reward_free=False)
+        FLAGS.env_name, frame_stack=FLAGS.frame_stack, max_size=FLAGS.finetuning_size, reward_free=False,
+        dataset_dir=FLAGS.dataset_dir)
 
     if FLAGS.video_episodes > 0:
         assert 'singletask' in FLAGS.env_name, 'Rendering is currently only supported for OGBench environments.'
@@ -113,6 +116,14 @@ def main(_):
 
     # Create agent.
     example_batch = pretraining_train_dataset.sample(1)
+    create_kwargs = {}
+    if config['agent_name'] == 'infom' and config.get('bridge_loss_weight', 0.0) > 0.0:
+        if 'third_person_observations' not in example_batch:
+            raise ValueError(
+                'InFOM bridge loss requires a bridge dataset with third_person_observations. '
+                'Use an env_name starting with "bridge-".'
+            )
+        create_kwargs['ex_third_person_observations'] = example_batch['third_person_observations']
 
     agent_class = agents[config['agent_name']]
     agent = agent_class.create(
@@ -120,6 +131,7 @@ def main(_):
         example_batch['observations'],
         example_batch['actions'],
         config,
+        **create_kwargs,
     )
 
     # Restore agent.

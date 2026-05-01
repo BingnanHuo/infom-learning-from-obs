@@ -177,6 +177,27 @@ class InFOMAgent(flax.struct.PyTreeNode):
             'future_flow_matching_loss': future_flow_matching_loss.mean(),
         }
 
+    def bridge_consistency_loss(self, batch, grad_params):
+        """Align third-person bridge latents to the ego transition encoder."""
+        next_observations = batch['next_observations']
+        next_actions = batch['next_actions']
+        next_third_person_observations = batch['next_third_person_observations']
+
+        ego_dist = self.network.select('intention_encoder')(
+            next_observations, next_actions, params=grad_params)
+        bridge_dist = self.network.select('bridge_intention_encoder')(
+            next_third_person_observations, next_actions, params=grad_params)
+
+        ego_means = jax.lax.stop_gradient(ego_dist.mean())
+        bridge_means = bridge_dist.mean()
+        bridge_consistency_loss = jnp.square(bridge_means - ego_means).mean()
+
+        return bridge_consistency_loss, {
+            'bridge_consistency_loss': bridge_consistency_loss,
+            'ego_latent_norm': jnp.linalg.norm(ego_means, axis=-1).mean(),
+            'bridge_latent_norm': jnp.linalg.norm(bridge_means, axis=-1).mean(),
+        }
+
     def behavioral_cloning_loss(self, batch, grad_params):
         """Compute the behavioral cloning loss for pretraining."""
         observations = batch['observations']
@@ -287,7 +308,15 @@ class InFOMAgent(flax.struct.PyTreeNode):
         for k, v in bc_info.items():
             info[f'bc/{k}'] = v
 
-        loss = flow_occupancy_loss + bc_loss
+        bridge_loss = 0.0
+        if self.config['bridge_loss_weight'] > 0.0:
+            bridge_consistency_loss, bridge_info = self.bridge_consistency_loss(batch, grad_params)
+            for k, v in bridge_info.items():
+                info[f'bridge/{k}'] = v
+            bridge_loss = self.config['bridge_loss_weight'] * bridge_consistency_loss
+            info['bridge/weighted_bridge_loss'] = bridge_loss
+
+        loss = flow_occupancy_loss + bc_loss + bridge_loss
         return loss, info
 
     @partial(jax.jit, static_argnames=('full_update',))
@@ -390,6 +419,7 @@ class InFOMAgent(flax.struct.PyTreeNode):
         ex_observations,
         ex_actions,
         config,
+        ex_third_person_observations=None,
     ):
         """Create a new agent.
 
@@ -398,6 +428,7 @@ class InFOMAgent(flax.struct.PyTreeNode):
             ex_observations: Example observations.
             ex_actions: Example batch of actions.
             config: Configuration dictionary.
+            ex_third_person_observations: Example third-person observations for bridge pretraining.
         """
         rng = jax.random.PRNGKey(seed)
         rng, init_rng, time_rng = jax.random.split(rng, 3)
@@ -426,6 +457,16 @@ class InFOMAgent(flax.struct.PyTreeNode):
             encoders['critic_vf'] = encoder_module()
             encoders['intention'] = encoder_module()
             encoders['actor'] = encoder_module()
+
+        bridge_enabled = config['bridge_loss_weight'] > 0.0
+        if bridge_enabled:
+            if ex_third_person_observations is None:
+                raise ValueError(
+                    'bridge_loss_weight > 0 requires ex_third_person_observations. '
+                    'Use a bridge dataset that provides third_person_observations.'
+                )
+            if config['bridge_encoder'] is None:
+                raise ValueError('bridge_encoder must be set when bridge_loss_weight > 0.')
 
         # Define value and actor networks.
         critic_def = Value(
@@ -458,6 +499,14 @@ class InFOMAgent(flax.struct.PyTreeNode):
             hidden_dims=config['reward_hidden_dims'],
             layer_norm=config['reward_layer_norm'],
         )
+        if bridge_enabled:
+            bridge_encoder_module = encoder_modules[config['bridge_encoder']]
+            bridge_intention_encoder_def = IntentionEncoder(
+                hidden_dims=config['bridge_intention_encoder_hidden_dims'],
+                latent_dim=config['latent_dim'],
+                layer_norm=config['bridge_intention_encoder_layer_norm'],
+                encoder=bridge_encoder_module(),
+            )
 
         network_info = dict(
             critic=(critic_def, (ex_orig_observations, ex_actions)),
@@ -472,6 +521,9 @@ class InFOMAgent(flax.struct.PyTreeNode):
             actor=(actor_def, (ex_orig_observations, )),
             reward=(reward_def, (ex_observations,)),
         )
+        if bridge_enabled:
+            network_info['bridge_intention_encoder'] = (
+                bridge_intention_encoder_def, (ex_third_person_observations, ex_actions))
         if config['encoder'] is not None:
             network_info['critic_vf_encoder'] = (
                 encoders.get('critic_vf'), (ex_orig_observations,))
@@ -524,6 +576,10 @@ def get_config():
             num_flow_steps=10,  # Number of flow steps.
             normalize_q_loss=False,  # Whether to normalize the Q loss.
             encoder=ml_collections.config_dict.placeholder(str),  # Encoder name ('mlp', 'impala_small', etc.).
+            bridge_loss_weight=0.0,  # Weight for third-person-to-ego latent consistency during pretraining.
+            bridge_encoder='impala_small',  # Encoder used for third-person bridge observations.
+            bridge_intention_encoder_hidden_dims=(512, 512),  # Bridge encoder trunk hidden dimensions.
+            bridge_intention_encoder_layer_norm=True,  # Whether to use layer normalization for the bridge trunk.
         )
     )
     return config
