@@ -7,5 +7,8 @@ matplotlib >= 3.10.3
 moviepy >= 2.1.2
 wandb >= 0.19.11
 wandb-osh >= 1.2.2
+setuptools >= 69.0.0, < 81.0.0
+tensorboard >= 2.16.0
+tensorboardX >= 2.6.2
 gymnasium == 0.29.1
 h5py >= 3.12.1

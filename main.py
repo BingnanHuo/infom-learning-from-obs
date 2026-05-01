@@ -17,13 +17,15 @@ from envs.env_utils import make_env_and_datasets
 from utils.datasets import GCDataset, Dataset, ReplayBuffer
 from utils.evaluation import evaluate
 from utils.flax_utils import restore_agent, save_agent
-from utils.log_utils import CsvLogger, get_exp_name, get_flag_dict, get_wandb_video, setup_wandb
+from utils.log_utils import CsvLogger, TensorBoardLogger, get_exp_name, get_flag_dict, get_wandb_video, setup_wandb
 
 FLAGS = flags.FLAGS
 
 flags.DEFINE_integer('enable_wandb', 1, 'Whether to use wandb.')
 flags.DEFINE_string('wandb_run_group', 'debug', 'Run group.')
 flags.DEFINE_string('wandb_mode', 'online', 'Wandb mode.')
+flags.DEFINE_integer('enable_tensorboard', 0, 'Whether to log scalar metrics to TensorBoard.')
+flags.DEFINE_string('tensorboard_dir', None, 'TensorBoard log directory. Defaults to save_dir/tensorboard.')
 flags.DEFINE_integer('seed', 0, 'Random seed.')
 flags.DEFINE_string('env_name', 'cube-single-play-singletask-v0', 'Environment (dataset) name.')
 flags.DEFINE_string('dataset_dir', None, 'Optional OGBench dataset directory.')
@@ -143,6 +145,10 @@ def main(_):
     pretraining_eval_logger = CsvLogger(os.path.join(FLAGS.save_dir, 'pretraining_eval.csv'))
     finetuning_train_logger = CsvLogger(os.path.join(FLAGS.save_dir, 'finetuning_train.csv'))
     finetuning_eval_logger = CsvLogger(os.path.join(FLAGS.save_dir, 'finetuning_eval.csv'))
+    tensorboard_logger = None
+    if FLAGS.enable_tensorboard:
+        tensorboard_dir = FLAGS.tensorboard_dir or os.path.join(FLAGS.save_dir, 'tensorboard')
+        tensorboard_logger = TensorBoardLogger(tensorboard_dir)
     first_time = time.time()
     last_time = time.time()
 
@@ -245,6 +251,8 @@ def main(_):
                     trigger_sync()
 
             train_logger.log(train_metrics, step=i)
+            if tensorboard_logger is not None:
+                tensorboard_logger.log(train_metrics, step=i)
 
         # Evaluate agent.
         if (FLAGS.eval_interval != 0 and (i > FLAGS.pretraining_steps)
@@ -274,6 +282,8 @@ def main(_):
                 if FLAGS.wandb_mode == 'offline':
                     trigger_sync()
             eval_logger.log(eval_metrics, step=i)
+            if tensorboard_logger is not None:
+                tensorboard_logger.log(eval_metrics, step=i)
 
         # Save agent.
         if i % FLAGS.save_interval == 0:
@@ -283,6 +293,8 @@ def main(_):
     pretraining_eval_logger.close()
     finetuning_train_logger.close()
     finetuning_eval_logger.close()
+    if tensorboard_logger is not None:
+        tensorboard_logger.close()
 
 
 if __name__ == '__main__':
