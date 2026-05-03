@@ -16,7 +16,7 @@ EVAL_SUCCESS = 'evaluation/episode.success'
 BRIDGE_TRAIN_LOSS = 'training/bridge/weighted_bridge_loss'
 BRIDGE_VAL_LOSS = 'validation/bridge/weighted_bridge_loss'
 ERROR_PATTERN = re.compile(
-    r'Traceback|RuntimeError|OutOfMemory|out of memory|OOM|CANCELLED|TIMEOUT|DUE TO TIME|FAILED|Error'
+    r'Traceback|RuntimeError|OutOfMemory|out of memory|\bOOM\b|CANCELLED|TIMEOUT|DUE TO TIME|FAILED|\bERROR\b|(^|\s)Error(:|\s)'
 )
 
 
