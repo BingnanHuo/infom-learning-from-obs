@@ -40,6 +40,9 @@ flags.DEFINE_integer('finetuning_size', 500_000, 'Size of the dataset for fine-t
 flags.DEFINE_integer('log_interval', 5_000, 'Logging interval.')
 flags.DEFINE_integer('eval_interval', 50_000, 'Evaluation interval.')
 flags.DEFINE_integer('save_interval', 1_500_000, 'Saving interval.')
+flags.DEFINE_integer('save_best_eval', 0, 'Whether to save a checkpoint when the selected eval metric improves.')
+flags.DEFINE_string('best_eval_metric', 'evaluation/episode.return', 'Evaluation metric used for best checkpointing.')
+flags.DEFINE_enum('best_eval_mode', 'max', ['max', 'min'], 'Whether higher or lower best_eval_metric values are better.')
 
 flags.DEFINE_integer('eval_episodes', 50, 'Number of evaluation episodes.')
 flags.DEFINE_integer('video_episodes', 0, 'Number of video episodes for each task.')
@@ -53,6 +56,66 @@ flags.DEFINE_integer('inplace_aug', 1, 'Whether to replace the original image af
 flags.DEFINE_integer('frame_stack', None, 'Number of frames to stack.')
 
 config_flags.DEFINE_config_file('agent', 'agents/infom.py', lock_config=False)
+
+
+def _to_finite_float(value):
+    try:
+        array = np.asarray(value)
+    except (TypeError, ValueError):
+        return None
+
+    if array.shape != ():
+        return None
+
+    value = float(array)
+    if not np.isfinite(value):
+        return None
+    return value
+
+
+def _is_better_eval(value, best_value, mode):
+    if best_value is None:
+        return True
+    if mode == 'max':
+        return value > best_value
+    if mode == 'min':
+        return value < best_value
+    raise ValueError(f'Unsupported best_eval_mode: {mode}')
+
+
+def _save_best_eval_if_improved(agent, eval_metrics, step, best_eval):
+    metric_value = _to_finite_float(eval_metrics.get(FLAGS.best_eval_metric))
+    if metric_value is None:
+        print(
+            f'Skipping best-eval checkpoint at step {step}: metric '
+            f'{FLAGS.best_eval_metric!r} is missing, non-scalar, or non-finite.',
+            flush=True,
+        )
+        return best_eval, None, False
+
+    best_value = None if best_eval is None else best_eval['value']
+    if not _is_better_eval(metric_value, best_value, FLAGS.best_eval_mode):
+        return best_eval, metric_value, False
+
+    save_agent(agent, FLAGS.save_dir, step)
+    checkpoint_path = os.path.join(FLAGS.save_dir, f'params_{step}.pkl')
+    best_eval = {
+        'metric': FLAGS.best_eval_metric,
+        'mode': FLAGS.best_eval_mode,
+        'value': metric_value,
+        'step': int(step),
+        'checkpoint_path': checkpoint_path,
+        'env_name': FLAGS.env_name,
+        'seed': int(FLAGS.seed),
+        'wandb_run_group': FLAGS.wandb_run_group,
+        'updated_at': time.strftime('%Y-%m-%dT%H:%M:%S%z'),
+    }
+    best_eval_path = os.path.join(FLAGS.save_dir, 'best_eval.json')
+    with open(best_eval_path, 'w') as f:
+        json.dump(best_eval, f, indent=2, sort_keys=True)
+        f.write('\n')
+    print(f'Updated best eval checkpoint metadata at {best_eval_path}', flush=True)
+    return best_eval, metric_value, True
 
 
 def main(_):
@@ -151,6 +214,7 @@ def main(_):
         tensorboard_logger = TensorBoardLogger(tensorboard_dir)
     first_time = time.time()
     last_time = time.time()
+    best_eval = None
 
     inferred_latent = None  # Only for HILP and FB.
     rng = jax.random.PRNGKey(FLAGS.seed)  # Only for MBPO
@@ -275,6 +339,16 @@ def main(_):
             if FLAGS.video_episodes > 0:
                 video = get_wandb_video(renders=renders)
                 eval_metrics['video'] = video
+
+            if FLAGS.save_best_eval:
+                best_eval, best_eval_metric_value, is_best_eval = _save_best_eval_if_improved(
+                    agent, eval_metrics, i, best_eval)
+                if best_eval_metric_value is not None:
+                    eval_metrics['best_eval/current_value'] = best_eval_metric_value
+                if best_eval is not None:
+                    eval_metrics['best_eval/best_value'] = best_eval['value']
+                    eval_metrics['best_eval/best_step'] = best_eval['step']
+                eval_metrics['best_eval/is_best'] = float(is_best_eval)
 
             if FLAGS.enable_wandb:
                 wandb.log(eval_metrics, step=i)
