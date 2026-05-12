@@ -32,6 +32,7 @@ def main(_):
     assert FLAGS.dataset_type in ['play', 'noisy']
     # 'play': Use a non-Markovian oracle (PlanOracle) that follows a pre-computed plan.
     # 'noisy': Use a Markovian, closed-loop oracle (MarkovOracle) with Gaussian action noise.
+    np.random.seed(FLAGS.seed)
 
     # Initialize environment.
     env = gymnasium.make(
@@ -40,6 +41,7 @@ def main(_):
         mode='data_collection',
         max_episode_steps=FLAGS.max_episode_steps,
     )
+    env.action_space.seed(FLAGS.seed)
 
     # Initialize oracles.
     oracle_type = 'plan' if FLAGS.dataset_type == 'play' else 'markov'
@@ -92,7 +94,7 @@ def main(_):
     for ep_idx in trange(num_train_episodes + num_val_episodes):
         # Have an additional while loop to handle rare cases with undesirable states (for the Scene environment).
         while True:
-            ob, info = env.reset()
+            ob, info = env.reset(seed=FLAGS.seed + ep_idx)
 
             # Set the cube stacking probability for this episode.
             if 'single' in FLAGS.env_name:

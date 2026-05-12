@@ -1,0 +1,30 @@
+{
+  "constraint": "h100",
+  "created_at": "2026-05-05T18:29:03.925766+00:00",
+  "current_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs",
+  "exclude": "gpu026,gpu030",
+  "jobs": {
+    "current_noextras_t1_s0": "56723249",
+    "upstream_t1_s0": "56723248"
+  },
+  "partition": "gpu-preempt",
+  "probe_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs",
+  "python": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/tools/miniforge3/envs/infom-obs/bin/python",
+  "run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_repro_ab_20260505_h100_t1s0",
+  "scripts": {
+    "current_noextras_t1_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_repro_ab_20260505_h100_t1s0/slurm/current_noextras_t1_s0.sbatch",
+    "upstream_t1_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_repro_ab_20260505_h100_t1s0/slurm/upstream_t1_s0.sbatch"
+  },
+  "seeds": [
+    0
+  ],
+  "tasks": [
+    1
+  ],
+  "time_limit": "12:00:00",
+  "upstream_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-upstream-ed0761d",
+  "variants": [
+    "upstream",
+    "current_noextras"
+  ]
+}

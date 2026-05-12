@@ -16,12 +16,12 @@ def load_dataset(
     ob_dtype=np.float32,
     action_dtype=np.float32,
     compact_dataset=False,
+    include_third_person=True,
 ):
     """Load a paired OGBench bridge dataset while preserving auxiliary fields."""
     with np.load(dataset_path) as file:
         required_keys = [
             'observations',
-            'third_person_observations',
             'actions',
             'terminals',
             'qpos',
@@ -29,13 +29,14 @@ def load_dataset(
             'episode_ids',
             'timesteps',
         ]
+        if include_third_person:
+            required_keys.append('third_person_observations')
         missing_keys = [k for k in required_keys if k not in file]
         if missing_keys:
             raise KeyError(f'Missing keys in bridge dataset {dataset_path}: {missing_keys}')
 
         dataset = dict(
             observations=file['observations'][...].astype(ob_dtype, copy=False),
-            third_person_observations=file['third_person_observations'][...].astype(np.uint8, copy=False),
             actions=file['actions'][...].astype(action_dtype, copy=False),
             terminals=file['terminals'][...].astype(np.float32, copy=False),
             qpos=file['qpos'][...].astype(np.float32, copy=False),
@@ -43,6 +44,10 @@ def load_dataset(
             episode_ids=file['episode_ids'][...].astype(np.int32, copy=False),
             timesteps=file['timesteps'][...].astype(np.int32, copy=False),
         )
+        if include_third_person:
+            dataset['third_person_observations'] = (
+                file['third_person_observations'][...].astype(np.uint8, copy=False)
+            )
         if 'button_states' in file:
             dataset['button_states'] = file['button_states'][...].astype(np.int64, copy=False)
 
@@ -58,10 +63,12 @@ def load_dataset(
     next_ob_mask = np.concatenate([[False], ob_mask[:-1]])
 
     dataset['next_observations'] = dataset['observations'][next_ob_mask]
-    dataset['next_third_person_observations'] = dataset['third_person_observations'][next_ob_mask]
+    if include_third_person:
+        dataset['next_third_person_observations'] = dataset['third_person_observations'][next_ob_mask]
 
     dataset['observations'] = dataset['observations'][ob_mask]
-    dataset['third_person_observations'] = dataset['third_person_observations'][ob_mask]
+    if include_third_person:
+        dataset['third_person_observations'] = dataset['third_person_observations'][ob_mask]
     dataset['actions'] = dataset['actions'][ob_mask]
     dataset['qpos'] = dataset['qpos'][ob_mask]
     dataset['qvel'] = dataset['qvel'][ob_mask]
@@ -81,6 +88,7 @@ def make_env_and_datasets(
     dataset_dir=DEFAULT_DATASET_DIR,
     compact_dataset=False,
     env_only=False,
+    include_third_person=True,
     **env_kwargs,
 ):
     """Make a state-control OGBench env and load a paired bridge dataset."""
@@ -127,8 +135,16 @@ def make_env_and_datasets(
             f'{train_dataset_path} and {val_dataset_path}.'
         )
 
-    train_dataset = load_dataset(train_dataset_path, compact_dataset=compact_dataset)
-    val_dataset = load_dataset(val_dataset_path, compact_dataset=compact_dataset)
+    train_dataset = load_dataset(
+        train_dataset_path,
+        compact_dataset=compact_dataset,
+        include_third_person=include_third_person,
+    )
+    val_dataset = load_dataset(
+        val_dataset_path,
+        compact_dataset=compact_dataset,
+        include_third_person=include_third_person,
+    )
 
     if relabel_rewards:
         if ('scene' in env_name or 'puzzle' in env_name) and 'button_states' not in train_dataset:

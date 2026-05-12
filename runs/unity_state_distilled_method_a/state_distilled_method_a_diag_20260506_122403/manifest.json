@@ -1,0 +1,19 @@
+{
+  "checkpoint_interval": 5000,
+  "constraint": "h100|a100|l40s|a40",
+  "created_at": "20260506_122403",
+  "data_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/data/bridge_cube_single_play_20260506_004058",
+  "eval_episodes": 10,
+  "eval_interval": 5000,
+  "finetuning_steps": 25000,
+  "gres": "gpu:1",
+  "local_run_root": "runs/unity_state_distilled_method_a/state_distilled_method_a_diag_20260506_122403",
+  "log_interval": 1000,
+  "partition": "gpu",
+  "pretraining_steps": 50000,
+  "qos": "short",
+  "remote_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs",
+  "remote_run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/state_distilled_method_a_diag_20260506_122403",
+  "seed": 0,
+  "task": 1
+}

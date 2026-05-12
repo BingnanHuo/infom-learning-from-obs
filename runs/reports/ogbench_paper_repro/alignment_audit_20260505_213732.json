@@ -1,0 +1,666 @@
+{
+  "alignment_rows": [
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "pretraining_steps",
+      "paper_expected": "1000000",
+      "status": "aligned",
+      "upstream_observed": "1000000"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "finetuning_steps",
+      "paper_expected": "500000",
+      "status": "aligned",
+      "upstream_observed": "500000"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "pretraining_size",
+      "paper_expected": "1000000",
+      "status": "aligned",
+      "upstream_observed": "1000000"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "finetuning_size",
+      "paper_expected": "500000",
+      "status": "aligned",
+      "upstream_observed": "500000"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "eval_interval",
+      "paper_expected": "50000",
+      "status": "aligned",
+      "upstream_observed": "50000"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "eval_episodes",
+      "paper_expected": "50",
+      "status": "aligned",
+      "upstream_observed": "50"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "lr",
+      "paper_expected": "0.0003",
+      "status": "aligned",
+      "upstream_observed": "0.0003"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "batch_size",
+      "paper_expected": "256",
+      "status": "aligned",
+      "upstream_observed": "256"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "latent_dim",
+      "paper_expected": "512",
+      "status": "aligned",
+      "upstream_observed": "512"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "discount",
+      "paper_expected": "0.99",
+      "status": "aligned",
+      "upstream_observed": "0.99"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "tau",
+      "paper_expected": "0.005",
+      "status": "aligned",
+      "upstream_observed": "0.005"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "num_flow_goals",
+      "paper_expected": "16",
+      "status": "aligned",
+      "upstream_observed": "16"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "num_flow_steps",
+      "paper_expected": "10",
+      "status": "aligned",
+      "upstream_observed": "10"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "actor_freq",
+      "paper_expected": "4",
+      "status": "aligned",
+      "upstream_observed": "4"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "q_agg",
+      "paper_expected": "min",
+      "status": "aligned",
+      "upstream_observed": "min"
+    },
+    {
+      "action": "Use clean upstream command path.",
+      "dimension": "normalize_q_loss",
+      "paper_expected": "False",
+      "status": "aligned",
+      "upstream_observed": "False"
+    },
+    {
+      "action": "Reject runs missing these flags.",
+      "dimension": "cube_single_overrides",
+      "paper_expected": "expectile=0.95, kl_weight=0.05, alpha=30",
+      "status": "aligned when command includes overrides",
+      "upstream_observed": "set by run command, not default config"
+    },
+    {
+      "action": "Use clean upstream for replication claims.",
+      "dimension": "current_branch_extras",
+      "paper_expected": "no bridge/checkpoint/TensorBoard extensions",
+      "status": "gap for exact replication",
+      "upstream_observed": "tensorboard, checkpoint_resume, bridge_loss, dataset_dir"
+    },
+    {
+      "action": "Use patched generator for sensitivity tests; do not call generated data paper-identical.",
+      "dimension": "generator_seed",
+      "paper_expected": "reproducible fine-tune data or published hash",
+      "status": "gap",
+      "upstream_observed": "{\"declares_seed_flag\": true, \"seeds_action_space\": false, \"seeds_env_reset\": false, \"seeds_numpy\": false}"
+    }
+  ],
+  "deltas": {
+    "current_feature_flags": {
+      "bridge_loss": true,
+      "checkpoint_resume": true,
+      "dataset_dir": true,
+      "tensorboard": true
+    },
+    "current_head": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+    "diff_name_status": [
+      "M\tREADME.md",
+      "M\tagents/infom.py",
+      "M\tdata_gen_scripts/generate_ogbench_manispace.py",
+      "M\tenvs/env_utils.py",
+      "M\tmain.py",
+      "M\trequirements.txt"
+    ],
+    "diff_stat": "README.md                                      |  68 ++++++-\n agents/infom.py                                |  58 +++++-\n data_gen_scripts/generate_ogbench_manispace.py |   4 +-\n envs/env_utils.py                              |  21 +-\n main.py                                        | 271 +++++++++++++++++++++++--\n requirements.txt                               |   5 +-\n 6 files changed, 392 insertions(+), 35 deletions(-)",
+    "generator_seed_controls": {
+      "declares_seed_flag": true,
+      "seeds_action_space": true,
+      "seeds_env_reset": true,
+      "seeds_numpy": true
+    },
+    "git_status": "## feature/tensorboard-local-ogbench-runs...origin/feature/tensorboard-local-ogbench-runs\n M data_gen_scripts/generate_ogbench_manispace.py\n M main.py\n M utils/flax_utils.py\n M utils/log_utils.py\n?? runs/reports/ogbench_paper_repro/\n?? scripts/audit_ogbench_replication_alignment.py\n?? scripts/diagnose_ogbench_paper_repro.py\n?? scripts/jax_cuda_probe.py\n?? scripts/submit_ogbench_cube_single_repro_unity.py\n?? scripts/submit_ogbench_repro_ab_unity.py\n?? scripts/summarize_ogbench_paper_repro.py",
+    "upstream_generator_seed_controls": {
+      "declares_seed_flag": true,
+      "seeds_action_space": false,
+      "seeds_env_reset": false,
+      "seeds_numpy": false
+    },
+    "upstream_head": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+    "upstream_remote": "ed0761d7a349fb34b201071f98ac88b6d91cafe2\tHEAD\ned0761d7a349fb34b201071f98ac88b6d91cafe2\trefs/heads/main"
+  },
+  "generated_at": "2026-05-05T21:37:35.492436+00:00",
+  "local_datasets": {
+    "dataset_dir": "/home/nick/.ogbench/data",
+    "files": {
+      "cube-single-play-ft-v0-val.npz": {
+        "arrays": {
+          "actions": {
+            "dtype": "float32",
+            "shape": [
+              50050,
+              5
+            ]
+          },
+          "observations": {
+            "dtype": "float32",
+            "shape": [
+              50050,
+              28
+            ]
+          },
+          "qpos": {
+            "dtype": "float32",
+            "shape": [
+              50050,
+              21
+            ]
+          },
+          "qvel": {
+            "dtype": "float32",
+            "shape": [
+              50050,
+              20
+            ]
+          },
+          "terminals": {
+            "dtype": "bool",
+            "shape": [
+              50050
+            ]
+          }
+        },
+        "bytes": 12646389,
+        "exists": true,
+        "sha256": "efe81dd66aea2952ebc942d98b2f303540ab18a7879033a724cd80687d410b1e"
+      },
+      "cube-single-play-ft-v0.npz": {
+        "arrays": {
+          "actions": {
+            "dtype": "float32",
+            "shape": [
+              500500,
+              5
+            ]
+          },
+          "observations": {
+            "dtype": "float32",
+            "shape": [
+              500500,
+              28
+            ]
+          },
+          "qpos": {
+            "dtype": "float32",
+            "shape": [
+              500500,
+              21
+            ]
+          },
+          "qvel": {
+            "dtype": "float32",
+            "shape": [
+              500500,
+              20
+            ]
+          },
+          "terminals": {
+            "dtype": "bool",
+            "shape": [
+              500500
+            ]
+          }
+        },
+        "bytes": 126403421,
+        "exists": true,
+        "sha256": "f91817a1aba8f379676ef1aa8b24d8fd5e1bf4ca527301327a50a9b1fc38ae07"
+      },
+      "cube-single-play-v0-val.npz": {
+        "arrays": {
+          "actions": {
+            "dtype": "float32",
+            "shape": [
+              100100,
+              5
+            ]
+          },
+          "observations": {
+            "dtype": "float32",
+            "shape": [
+              100100,
+              28
+            ]
+          },
+          "qpos": {
+            "dtype": "float32",
+            "shape": [
+              100100,
+              21
+            ]
+          },
+          "qvel": {
+            "dtype": "float32",
+            "shape": [
+              100100,
+              20
+            ]
+          },
+          "terminals": {
+            "dtype": "bool",
+            "shape": [
+              100100
+            ]
+          }
+        },
+        "bytes": 25687020,
+        "exists": true,
+        "sha256": "96d07401bdebdc3f0ea6d56ed1333863e0962f441483adc2c43b83105046eb00"
+      },
+      "cube-single-play-v0.npz": {
+        "arrays": {
+          "actions": {
+            "dtype": "float32",
+            "shape": [
+              1001000,
+              5
+            ]
+          },
+          "observations": {
+            "dtype": "float32",
+            "shape": [
+              1001000,
+              28
+            ]
+          },
+          "qpos": {
+            "dtype": "float32",
+            "shape": [
+              1001000,
+              21
+            ]
+          },
+          "qvel": {
+            "dtype": "float32",
+            "shape": [
+              1001000,
+              20
+            ]
+          },
+          "terminals": {
+            "dtype": "bool",
+            "shape": [
+              1001000
+            ]
+          }
+        },
+        "bytes": 256728298,
+        "exists": true,
+        "sha256": "80f3b6fd27f4f9d9e9eb6f0d07d6951559012f45b1e15ea4046ef8ecd8d3684e"
+      }
+    }
+  },
+  "packages": {
+    "distrax": "0.1.5",
+    "dm_control": "1.0.39",
+    "flax": "0.10.7",
+    "gymnasium": "0.29.1",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "ml_collections": "1.1.0",
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "ogbench": "1.1.0",
+    "optax": "0.2.8"
+  },
+  "paper_protocol": {
+    "actor_freq": 4,
+    "alpha": 30,
+    "batch_size": 256,
+    "discount": 0.99,
+    "eval_episodes": 50,
+    "eval_interval": 50000,
+    "expectile": 0.95,
+    "finetuning_size": 500000,
+    "finetuning_steps": 500000,
+    "kl_weight": 0.05,
+    "latent_dim": 512,
+    "lr": 0.0003,
+    "normalize_q_loss": false,
+    "num_flow_goals": 16,
+    "num_flow_steps": 10,
+    "paper_metric_finetuning_steps": [
+      400000,
+      450000,
+      500000
+    ],
+    "pretraining_size": 1000000,
+    "pretraining_steps": 1000000,
+    "q_agg": "min",
+    "tau": 0.005
+  },
+  "paper_targets": {
+    "1": [
+      92.5,
+      4.0
+    ],
+    "2": [
+      78.4,
+      12.3
+    ],
+    "3": [
+      56.4,
+      36.9
+    ],
+    "4": [
+      91.5,
+      14.2
+    ],
+    "5": [
+      70.0,
+      39.1
+    ]
+  },
+  "paper_url": "https://arxiv.org/abs/2506.08902",
+  "python": "3.10.16 (main, Dec 11 2024, 16:24:50) [GCC 11.2.0]",
+  "remote_datasets": [
+    {
+      "content_length": "256728298",
+      "error": null,
+      "status": 200,
+      "url": "https://rail.eecs.berkeley.edu/datasets/ogbench/cube-single-play-v0.npz"
+    },
+    {
+      "content_length": "25687020",
+      "error": null,
+      "status": 200,
+      "url": "https://rail.eecs.berkeley.edu/datasets/ogbench/cube-single-play-v0-val.npz"
+    },
+    {
+      "content_length": null,
+      "error": "HTTP Error 404: Not Found",
+      "status": 404,
+      "url": "https://rail.eecs.berkeley.edu/datasets/ogbench/cube-single-play-ft-v0.npz"
+    },
+    {
+      "content_length": null,
+      "error": "HTTP Error 404: Not Found",
+      "status": 404,
+      "url": "https://rail.eecs.berkeley.edu/datasets/ogbench/cube-single-play-ft-v0-val.npz"
+    }
+  ],
+  "result_records": [
+    {
+      "best_success_pct": 30.0,
+      "final_success_pct": 18.0,
+      "health_flags": [
+        "training grad norm spike 9.28e+03",
+        "validation critic loss spike 2.09e+07",
+        "validation flow loss spike 3.84e+06",
+        "paper-window success far below target by 71.2 pp"
+      ],
+      "paper_success_pct": 21.333333333333332,
+      "protocol_issues": [],
+      "root_label": "local_task1",
+      "run_dir": "/home/nick/infom-runs/local_cube_single_priority_20260505_0005/runs/local_cube_single_task1/task1_seed0",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_local.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 94.0,
+      "final_success_pct": 0.0,
+      "health_flags": [
+        "training grad norm spike 4.73e+03",
+        "validation critic loss spike 1.34e+08",
+        "validation flow loss spike 5.87e+05",
+        "training actor MSE spike 0.682",
+        "training actor q_mean positive spike 983",
+        "success collapse best 0.94 to final 0.00",
+        "paper-window success far below target by 71.2 pp"
+      ],
+      "paper_success_pct": 21.333333333333336,
+      "protocol_issues": [],
+      "root_label": "unity_checkpointed_seed0",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task1/task1_seed0",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 84.0,
+      "final_success_pct": 8.0,
+      "health_flags": [
+        "validation critic loss spike 3.48e+07",
+        "validation flow loss spike 2.92e+05",
+        "training actor MSE spike 0.205",
+        "success collapse best 0.84 to final 0.08",
+        "paper-window success far below target by 59.1 pp"
+      ],
+      "paper_success_pct": 19.333333333333332,
+      "protocol_issues": [],
+      "root_label": "unity_checkpointed_seed0",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task2/task2_seed0",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 2
+    },
+    {
+      "best_success_pct": 100.0,
+      "final_success_pct": 0.0,
+      "health_flags": [
+        "validation critic loss spike 2.79e+07",
+        "validation flow loss spike 2.92e+05",
+        "training actor MSE spike 0.435",
+        "success collapse best 1.00 to final 0.00"
+      ],
+      "paper_success_pct": 61.33333333333334,
+      "protocol_issues": [],
+      "root_label": "unity_checkpointed_seed0",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task3/task3_seed0",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 3
+    },
+    {
+      "best_success_pct": 98.0,
+      "final_success_pct": 84.0,
+      "health_flags": [
+        "validation critic loss spike 1.52e+07",
+        "validation flow loss spike 2.2e+06"
+      ],
+      "paper_success_pct": 82.0,
+      "protocol_issues": [],
+      "root_label": "unity_checkpointed_seed0",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task4/task4_seed0",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 4
+    },
+    {
+      "best_success_pct": 96.0,
+      "final_success_pct": 86.0,
+      "health_flags": [
+        "validation flow loss spike 1.67e+06"
+      ],
+      "paper_success_pct": 74.66666666666667,
+      "protocol_issues": [],
+      "root_label": "unity_checkpointed_seed0",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task5/task5_seed0",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 5
+    },
+    {
+      "best_success_pct": 0.0,
+      "final_success_pct": 0.0,
+      "health_flags": [],
+      "paper_success_pct": null,
+      "protocol_issues": [
+        "pretraining_steps=2 expected 1000000",
+        "finetuning_steps=2 expected 500000",
+        "eval_interval=1 expected 50000",
+        "eval_episodes=1 expected 50"
+      ],
+      "root_label": "unity_checkpointed_seed0",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/smoke_runs/unity_cube_single_paper_repro_smoke/smoke",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 90.0,
+      "final_success_pct": 64.0,
+      "health_flags": [
+        "validation critic loss spike 4.11e+06",
+        "validation flow loss spike 2.86e+05",
+        "paper-window success far below target by 27.8 pp"
+      ],
+      "paper_success_pct": 64.66666666666667,
+      "protocol_issues": [],
+      "root_label": "unity_upstream_task1_4seed",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd000_s_56693855.0.20260504_223853",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 16.0,
+      "final_success_pct": 0.0,
+      "health_flags": [
+        "paper-window success far below target by 89.8 pp"
+      ],
+      "paper_success_pct": 2.6666666666666665,
+      "protocol_issues": [],
+      "root_label": "unity_upstream_task1_4seed",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd001_s_56693856.0.20260504_223748",
+      "seed": 1,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 96.0,
+      "final_success_pct": 2.0,
+      "health_flags": [
+        "validation critic loss spike 1.41e+08",
+        "training actor MSE spike 0.232",
+        "success collapse best 0.96 to final 0.02",
+        "paper-window success far below target by 65.8 pp"
+      ],
+      "paper_success_pct": 26.666666666666668,
+      "protocol_issues": [],
+      "root_label": "unity_upstream_task1_4seed",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd002_s_56693857.0.20260504_223753",
+      "seed": 2,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 100.0,
+      "final_success_pct": 70.0,
+      "health_flags": [
+        "validation flow loss spike 3.2e+05"
+      ],
+      "paper_success_pct": 71.33333333333334,
+      "protocol_issues": [],
+      "root_label": "unity_upstream_task1_4seed",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd003_s_56693858.0.20260504_224004",
+      "seed": 3,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_20260505_unity_existing.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 92.0,
+      "final_success_pct": 26.0,
+      "health_flags": [
+        "validation flow loss spike 2.92e+05",
+        "training actor MSE spike 0.154",
+        "success collapse best 0.92 to final 0.26",
+        "paper-window success far below target by 81.8 pp"
+      ],
+      "paper_success_pct": 10.666666666666668,
+      "protocol_issues": [],
+      "root_label": "a100_ab",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_repro_ab_20260505_a100_t1s0/runs/current_noextras_task1_seed0/ab_current_noextras_task1/sd000_s_56723254.0.20260505_190117",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_ab_20260505_2026.records.json",
+      "task": 1
+    },
+    {
+      "best_success_pct": 92.0,
+      "final_success_pct": 38.0,
+      "health_flags": [
+        "training grad norm spike 1.07e+03",
+        "validation flow loss spike 2.92e+05",
+        "training actor MSE spike 0.134",
+        "success collapse best 0.92 to final 0.38",
+        "paper-window success far below target by 71.2 pp"
+      ],
+      "paper_success_pct": 21.333333333333336,
+      "protocol_issues": [],
+      "root_label": "a100_ab",
+      "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_repro_ab_20260505_a100_t1s0/runs/upstream_task1_seed0/ab_upstream_task1/sd000_s_56723253.0.20260505_185016",
+      "seed": 0,
+      "source": "/home/nick/infom-learning-from-obs/runs/reports/ogbench_paper_repro/diagnosis_ab_20260505_2026.records.json",
+      "task": 1
+    }
+  ],
+  "upstream_protocol": {
+    "actor_freq": 4,
+    "batch_size": 256,
+    "discount": 0.99,
+    "eval_episodes": 50,
+    "eval_interval": 50000,
+    "finetuning_size": 500000,
+    "finetuning_steps": 500000,
+    "latent_dim": 512,
+    "lr": 0.0003,
+    "normalize_q_loss": false,
+    "num_flow_goals": 16,
+    "num_flow_steps": 10,
+    "obs_norm_type": "normal",
+    "pretraining_size": 1000000,
+    "pretraining_steps": 1000000,
+    "q_agg": "min",
+    "save_interval": 1500000,
+    "tau": 0.005
+  },
+  "upstream_url": "https://github.com/chongyi-zheng/infom"
+}

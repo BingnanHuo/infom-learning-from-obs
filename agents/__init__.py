@@ -1,4 +1,6 @@
 from agents.crl_infonce import CRLInfoNCEAgent
+from agents.cross_modal_state_distilled_infom import CrossModalStateDistilledInFOMAgent
+from agents.cross_modal_tcn_infom import CrossModalTCNInFOMAgent
 from agents.dino_rebrac import DINOReBRACAgent
 from agents.fb_repr import ForwardBackwardRepresentationAgent
 from agents.hilp import HILPAgent
@@ -10,6 +12,8 @@ from agents.td_infonce import TDInfoNCEAgent
 
 agents = dict(
     crl_infonce=CRLInfoNCEAgent,
+    cross_modal_state_distilled_infom=CrossModalStateDistilledInFOMAgent,
+    cross_modal_tcn_infom=CrossModalTCNInFOMAgent,
     dino_rebrac=DINOReBRACAgent,
     fb_repr=ForwardBackwardRepresentationAgent,
     hilp=HILPAgent,
