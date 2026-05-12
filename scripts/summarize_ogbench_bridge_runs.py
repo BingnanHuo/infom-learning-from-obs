@@ -65,6 +65,29 @@ def mean_sd(values):
     return statistics.mean(values), statistics.stdev(values)
 
 
+def last_non_none(values):
+    for value in reversed(values):
+        if value is not None:
+            return value
+    return None
+
+
+def seed_sort_key(seed):
+    if seed is None:
+        return (1, -1)
+    return (0, seed)
+
+
+def record_sort_key(record):
+    return (record['variant'], seed_sort_key(record['seed']), record['run_name'])
+
+
+def maybe_delta(left, right):
+    if left is None or right is None:
+        return None
+    return left - right
+
+
 def infer_variant(run_dir, flags):
     text = str(run_dir).lower()
     if 'bridge_aware' in text or 'bridge-aware' in text:
@@ -126,8 +149,8 @@ def parse_run(run_dir):
         'eval_rows': len(eval_rows),
         'first_eval_step': min(steps) if steps else None,
         'final_step': max(steps) if steps else None,
-        'final_return': returns[-1],
-        'final_success': successes[-1],
+        'final_return': last_non_none(returns),
+        'final_success': last_non_none(successes),
         'best_return': max(returns_clean) if returns_clean else None,
         'best_success': max(successes_clean) if successes_clean else None,
         'bridge_loss_weight': float(agent.get('bridge_loss_weight') or 0.0),
@@ -192,7 +215,11 @@ def aggregate(records):
 
 def matched_deltas(records):
     by_seed = {}
+    unknown_seed_count = 0
     for record in records:
+        if record['seed'] is None:
+            unknown_seed_count += 1
+            continue
         by_seed.setdefault(record['seed'], {})[record['variant']] = record
 
     lines = [
@@ -207,10 +234,10 @@ def matched_deltas(records):
             continue
         row = {
             'seed': seed,
-            'final_return': bridge['final_return'] - ego['final_return'],
-            'final_success': bridge['final_success'] - ego['final_success'],
-            'best_return': bridge['best_return'] - ego['best_return'],
-            'best_success': bridge['best_success'] - ego['best_success'],
+            'final_return': maybe_delta(bridge['final_return'], ego['final_return']),
+            'final_success': maybe_delta(bridge['final_success'], ego['final_success']),
+            'best_return': maybe_delta(bridge['best_return'], ego['best_return']),
+            'best_success': maybe_delta(bridge['best_success'], ego['best_success']),
         }
         deltas.append(row)
         lines.append(
@@ -219,7 +246,10 @@ def matched_deltas(records):
         )
 
     if not deltas:
-        return 'No matched ego-only and bridge-aware seed pairs found.'
+        message = 'No matched ego-only and bridge-aware seed pairs found.'
+        if unknown_seed_count:
+            message += f' Omitted {unknown_seed_count} run(s) with unknown seed.'
+        return message
 
     final_return = mean_sd([d['final_return'] for d in deltas])
     final_success = mean_sd([d['final_success'] for d in deltas])
@@ -232,6 +262,8 @@ def matched_deltas(records):
         f'best return {fmt(best_return[0], 2)} +/- {fmt(best_return[1], 2)}, '
         f'best success {fmt(best_success[0], 3)} +/- {fmt(best_success[1], 3)}.'
     )
+    if unknown_seed_count:
+        lines.append(f'Omitted {unknown_seed_count} run(s) with unknown seed from matched deltas.')
     return '\n'.join(lines)
 
 
@@ -240,10 +272,10 @@ def per_seed_table(records):
         '| Variant | Seed | Job ID | Eval rows | Final step | Final return | Final success | Best return | Best success | Checkpoints | Best eval step |',
         '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |',
     ]
-    for record in sorted(records, key=lambda r: (r['variant'], r['seed'])):
+    for record in sorted(records, key=record_sort_key):
         best_eval = record['best_eval'] or {}
         lines.append(
-            f"| {record['variant']} | {record['seed']} | {record['job_id'] or 'NA'} "
+            f"| {record['variant']} | {record['seed'] if record['seed'] is not None else 'NA'} | {record['job_id'] or 'NA'} "
             f"| {record['eval_rows']} | {record['final_step']} | {fmt(record['final_return'], 2)} "
             f"| {fmt(record['final_success'], 3)} | {fmt(record['best_return'], 2)} "
             f"| {fmt(record['best_success'], 3)} | {record['checkpoint_count']} "
@@ -264,9 +296,9 @@ def bridge_loss_table(records):
         '| Seed | Train weighted first | Train weighted last | Val weighted last |',
         '| ---: | ---: | ---: | ---: |',
     ]
-    for record in sorted(bridge_records, key=lambda r: r['seed']):
+    for record in sorted(bridge_records, key=lambda r: seed_sort_key(r['seed'])):
         lines.append(
-            f"| {record['seed']} | {fmt(record.get('bridge_train_loss_first'), 10)} "
+            f"| {record['seed'] if record['seed'] is not None else 'NA'} | {fmt(record.get('bridge_train_loss_first'), 10)} "
             f"| {fmt(record.get('bridge_train_loss_last'), 10)} "
             f"| {fmt(record.get('bridge_val_loss_last'), 10)} |"
         )
