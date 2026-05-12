@@ -17,13 +17,15 @@ from envs.env_utils import make_env_and_datasets
 from utils.datasets import GCDataset, Dataset, ReplayBuffer
 from utils.evaluation import evaluate
 from utils.flax_utils import restore_agent, save_agent
-from utils.log_utils import CsvLogger, get_exp_name, get_flag_dict, get_wandb_video, setup_wandb
+from utils.log_utils import CsvLogger, TensorBoardLogger, get_exp_name, get_flag_dict, get_wandb_video, setup_wandb
 
 FLAGS = flags.FLAGS
 
 flags.DEFINE_integer('enable_wandb', 1, 'Whether to use wandb.')
 flags.DEFINE_string('wandb_run_group', 'debug', 'Run group.')
 flags.DEFINE_string('wandb_mode', 'online', 'Wandb mode.')
+flags.DEFINE_integer('enable_tensorboard', 0, 'Whether to log scalar metrics to TensorBoard.')
+flags.DEFINE_string('tensorboard_dir', None, 'TensorBoard log directory. Defaults to save_dir/tensorboard.')
 flags.DEFINE_integer('seed', 0, 'Random seed.')
 flags.DEFINE_string('env_name', 'cube-single-play-singletask-v0', 'Environment (dataset) name.')
 flags.DEFINE_string('dataset_dir', None, 'Optional OGBench dataset directory.')
@@ -38,6 +40,9 @@ flags.DEFINE_integer('finetuning_size', 500_000, 'Size of the dataset for fine-t
 flags.DEFINE_integer('log_interval', 5_000, 'Logging interval.')
 flags.DEFINE_integer('eval_interval', 50_000, 'Evaluation interval.')
 flags.DEFINE_integer('save_interval', 1_500_000, 'Saving interval.')
+flags.DEFINE_integer('save_best_eval', 0, 'Whether to save a checkpoint when the selected eval metric improves.')
+flags.DEFINE_string('best_eval_metric', 'evaluation/episode.return', 'Evaluation metric used for best checkpointing.')
+flags.DEFINE_enum('best_eval_mode', 'max', ['max', 'min'], 'Whether higher or lower best_eval_metric values are better.')
 
 flags.DEFINE_integer('eval_episodes', 50, 'Number of evaluation episodes.')
 flags.DEFINE_integer('video_episodes', 0, 'Number of video episodes for each task.')
@@ -51,6 +56,66 @@ flags.DEFINE_integer('inplace_aug', 1, 'Whether to replace the original image af
 flags.DEFINE_integer('frame_stack', None, 'Number of frames to stack.')
 
 config_flags.DEFINE_config_file('agent', 'agents/infom.py', lock_config=False)
+
+
+def _to_finite_float(value):
+    try:
+        array = np.asarray(value)
+    except (TypeError, ValueError):
+        return None
+
+    if array.shape != ():
+        return None
+
+    value = float(array)
+    if not np.isfinite(value):
+        return None
+    return value
+
+
+def _is_better_eval(value, best_value, mode):
+    if best_value is None:
+        return True
+    if mode == 'max':
+        return value > best_value
+    if mode == 'min':
+        return value < best_value
+    raise ValueError(f'Unsupported best_eval_mode: {mode}')
+
+
+def _save_best_eval_if_improved(agent, eval_metrics, step, best_eval):
+    metric_value = _to_finite_float(eval_metrics.get(FLAGS.best_eval_metric))
+    if metric_value is None:
+        print(
+            f'Skipping best-eval checkpoint at step {step}: metric '
+            f'{FLAGS.best_eval_metric!r} is missing, non-scalar, or non-finite.',
+            flush=True,
+        )
+        return best_eval, None, False
+
+    best_value = None if best_eval is None else best_eval['value']
+    if not _is_better_eval(metric_value, best_value, FLAGS.best_eval_mode):
+        return best_eval, metric_value, False
+
+    save_agent(agent, FLAGS.save_dir, step)
+    checkpoint_path = os.path.join(FLAGS.save_dir, f'params_{step}.pkl')
+    best_eval = {
+        'metric': FLAGS.best_eval_metric,
+        'mode': FLAGS.best_eval_mode,
+        'value': metric_value,
+        'step': int(step),
+        'checkpoint_path': checkpoint_path,
+        'env_name': FLAGS.env_name,
+        'seed': int(FLAGS.seed),
+        'wandb_run_group': FLAGS.wandb_run_group,
+        'updated_at': time.strftime('%Y-%m-%dT%H:%M:%S%z'),
+    }
+    best_eval_path = os.path.join(FLAGS.save_dir, 'best_eval.json')
+    with open(best_eval_path, 'w') as f:
+        json.dump(best_eval, f, indent=2, sort_keys=True)
+        f.write('\n')
+    print(f'Updated best eval checkpoint metadata at {best_eval_path}', flush=True)
+    return best_eval, metric_value, True
 
 
 def main(_):
@@ -143,8 +208,13 @@ def main(_):
     pretraining_eval_logger = CsvLogger(os.path.join(FLAGS.save_dir, 'pretraining_eval.csv'))
     finetuning_train_logger = CsvLogger(os.path.join(FLAGS.save_dir, 'finetuning_train.csv'))
     finetuning_eval_logger = CsvLogger(os.path.join(FLAGS.save_dir, 'finetuning_eval.csv'))
+    tensorboard_logger = None
+    if FLAGS.enable_tensorboard:
+        tensorboard_dir = FLAGS.tensorboard_dir or os.path.join(FLAGS.save_dir, 'tensorboard')
+        tensorboard_logger = TensorBoardLogger(tensorboard_dir)
     first_time = time.time()
     last_time = time.time()
+    best_eval = None
 
     inferred_latent = None  # Only for HILP and FB.
     rng = jax.random.PRNGKey(FLAGS.seed)  # Only for MBPO
@@ -245,6 +315,8 @@ def main(_):
                     trigger_sync()
 
             train_logger.log(train_metrics, step=i)
+            if tensorboard_logger is not None:
+                tensorboard_logger.log(train_metrics, step=i)
 
         # Evaluate agent.
         if (FLAGS.eval_interval != 0 and (i > FLAGS.pretraining_steps)
@@ -268,12 +340,24 @@ def main(_):
                 video = get_wandb_video(renders=renders)
                 eval_metrics['video'] = video
 
+            if FLAGS.save_best_eval:
+                best_eval, best_eval_metric_value, is_best_eval = _save_best_eval_if_improved(
+                    agent, eval_metrics, i, best_eval)
+                if best_eval_metric_value is not None:
+                    eval_metrics['best_eval/current_value'] = best_eval_metric_value
+                if best_eval is not None:
+                    eval_metrics['best_eval/best_value'] = best_eval['value']
+                    eval_metrics['best_eval/best_step'] = best_eval['step']
+                eval_metrics['best_eval/is_best'] = float(is_best_eval)
+
             if FLAGS.enable_wandb:
                 wandb.log(eval_metrics, step=i)
 
                 if FLAGS.wandb_mode == 'offline':
                     trigger_sync()
             eval_logger.log(eval_metrics, step=i)
+            if tensorboard_logger is not None:
+                tensorboard_logger.log(eval_metrics, step=i)
 
         # Save agent.
         if i % FLAGS.save_interval == 0:
@@ -283,6 +367,8 @@ def main(_):
     pretraining_eval_logger.close()
     finetuning_train_logger.close()
     finetuning_eval_logger.close()
+    if tensorboard_logger is not None:
+        tensorboard_logger.close()
 
 
 if __name__ == '__main__':

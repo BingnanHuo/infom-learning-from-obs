@@ -1,6 +1,7 @@
 import os
 import tempfile
 from datetime import datetime
+from numbers import Number
 
 import absl.flags as flags
 import ml_collections
@@ -37,6 +38,48 @@ class CsvLogger:
     def close(self):
         if self.file is not None:
             self.file.close()
+
+
+class TensorBoardLogger:
+    """TensorBoard scalar logger for training and evaluation metrics."""
+
+    def __init__(self, path):
+        try:
+            from tensorboardX import SummaryWriter
+        except ImportError as exc:
+            raise ImportError(
+                'TensorBoard logging requires tensorboardX. Install project requirements '
+                'or run `python -m pip install tensorboard tensorboardX` in the active environment.'
+            ) from exc
+
+        self.writer = SummaryWriter(path)
+        self.disallowed_types = (wandb.Image, wandb.Video, wandb.Histogram)
+
+    @staticmethod
+    def _to_scalar(value):
+        if isinstance(value, Number):
+            return float(value)
+
+        try:
+            array = np.asarray(value)
+        except (TypeError, ValueError):
+            return None
+
+        if array.shape == ():
+            return float(array)
+        return None
+
+    def log(self, row, step):
+        for key, value in row.items():
+            if isinstance(value, self.disallowed_types):
+                continue
+            scalar = self._to_scalar(value)
+            if scalar is not None:
+                self.writer.add_scalar(key, scalar, step)
+        self.writer.flush()
+
+    def close(self):
+        self.writer.close()
 
 
 def get_exp_name(seed):
