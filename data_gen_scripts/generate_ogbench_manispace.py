@@ -91,10 +91,12 @@ def main(_):
     total_train_steps = 0
     num_train_episodes = FLAGS.num_episodes
     num_val_episodes = FLAGS.num_episodes // 10
+    total_episodes = num_train_episodes + num_val_episodes
     for ep_idx in trange(num_train_episodes + num_val_episodes):
         # Have an additional while loop to handle rare cases with undesirable states (for the Scene environment).
+        retry_idx = 0
         while True:
-            ob, info = env.reset(seed=FLAGS.seed + ep_idx)
+            ob, info = env.reset(seed=FLAGS.seed + ep_idx + retry_idx * total_episodes)
 
             # Set the cube stacking probability for this episode.
             if 'single' in FLAGS.env_name:
@@ -170,6 +172,9 @@ def main(_):
                     print('Unhealthy episode, retrying...', flush=True)
                     for k in dataset.keys():
                         dataset[k] = dataset[k][:-step]
+                    retry_idx += 1
+                    if retry_idx > 100:
+                        raise RuntimeError(f'Exceeded 100 unhealthy retries for episode {ep_idx}')
             else:
                 break
 

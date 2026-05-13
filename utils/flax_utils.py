@@ -225,6 +225,11 @@ def find_latest_training_checkpoint(checkpoint_path):
         return None
 
     candidates = glob.glob(checkpoint_path)
+    if len(candidates) > 1:
+        raise ValueError(
+            f'Expected checkpoint_path to match at most one file or directory, '
+            f'but found {len(candidates)} candidates: {candidates}'
+        )
     if len(candidates) == 1 and os.path.isfile(candidates[0]):
         return candidates[0]
     if len(candidates) == 1 and os.path.isdir(candidates[0]):

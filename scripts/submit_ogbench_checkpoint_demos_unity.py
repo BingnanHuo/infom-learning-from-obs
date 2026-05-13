@@ -203,8 +203,10 @@ def main() -> int:
     (local_root / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
 
     remote_slurm = run_root / "slurm"
+    repo_root = Path(__file__).resolve().parents[1]
+    render_script = repo_root / "scripts" / "render_ogbench_checkpoint_demo.py"
     remote_run(args.ssh_host, f"mkdir -p {shlex.quote(str(remote_slurm))}")
-    remote_copy(args.ssh_host, Path("scripts/render_ogbench_checkpoint_demo.py"), args.repo / "scripts/render_ogbench_checkpoint_demo.py")
+    remote_copy(args.ssh_host, render_script, args.repo / "scripts/render_ogbench_checkpoint_demo.py")
     remote_script = remote_slurm / local_script.name
     remote_copy(args.ssh_host, local_script, remote_script)
     if args.dry_run:
