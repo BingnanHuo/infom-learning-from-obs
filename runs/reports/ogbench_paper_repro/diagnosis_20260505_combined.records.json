@@ -1,0 +1,3778 @@
+{
+  "environment": {
+    "dataset_hashes": {
+      "dataset_dir": "/home/nick/.ogbench/data",
+      "files": {
+        "cube-single-play-ft-v0-val.npz": {
+          "bytes": 12646389,
+          "sha256": "efe81dd66aea2952ebc942d98b2f303540ab18a7879033a724cd80687d410b1e"
+        },
+        "cube-single-play-ft-v0.npz": {
+          "bytes": 126403421,
+          "sha256": "f91817a1aba8f379676ef1aa8b24d8fd5e1bf4ca527301327a50a9b1fc38ae07"
+        },
+        "cube-single-play-v0-val.npz": {
+          "bytes": 25687020,
+          "sha256": "96d07401bdebdc3f0ea6d56ed1333863e0962f441483adc2c43b83105046eb00"
+        },
+        "cube-single-play-v0.npz": {
+          "bytes": 256728298,
+          "sha256": "80f3b6fd27f4f9d9e9eb6f0d07d6951559012f45b1e15ea4046ef8ecd8d3684e"
+        }
+      }
+    },
+    "git_head": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+    "git_status": "## feature/tensorboard-local-ogbench-runs...origin/feature/tensorboard-local-ogbench-runs\n M main.py\n M utils/flax_utils.py\n M utils/log_utils.py\n?? runs/reports/ogbench_paper_repro/\n?? scripts/diagnose_ogbench_paper_repro.py\n?? scripts/jax_cuda_probe.py\n?? scripts/submit_ogbench_cube_single_repro_unity.py\n?? scripts/submit_ogbench_repro_ab_unity.py\n?? scripts/summarize_ogbench_paper_repro.py",
+    "packages": {
+      "distrax": "0.1.5",
+      "dm_control": "1.0.39",
+      "flax": "0.10.7",
+      "gymnasium": "0.29.1",
+      "jax": "0.6.2",
+      "jaxlib": "0.6.2",
+      "ml_collections": "1.1.0",
+      "mujoco": "3.7.0",
+      "numpy": "2.2.6",
+      "ogbench": "1.1.0",
+      "optax": "0.2.8"
+    },
+    "python": "3.10.16 (main, Dec 11 2024, 16:24:50) [GCC 11.2.0]",
+    "repo_path": "/home/nick/infom-learning-from-obs"
+  },
+  "generated_at": "2026-05-05T18:28:08.914072+00:00",
+  "roots": [
+    {
+      "dataset_manifest": {},
+      "label": "local_task1",
+      "path": "/home/nick/infom-runs/local_cube_single_priority_20260505_0005",
+      "records": [
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.3,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 50000,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -182.36,
+          "final_step": 1500000,
+          "final_success": 0.18,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "training grad norm spike 9.28e+03",
+            "validation critic loss spike 2.09e+07",
+            "validation flow loss spike 3.84e+06",
+            "paper-window success far below target by 71.2 pp"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.023338966,
+              "last": 0.009925359,
+              "max": 0.023338966,
+              "min": 0.009427968,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -86.31265,
+              "last": -93.50753,
+              "max": -86.31265,
+              "min": -98.20474,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018235618,
+              "last": 0.008522953,
+              "max": 0.020656621,
+              "min": 0.0074782744,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 7.437087,
+              "last": 5.3130813,
+              "max": 98.98536,
+              "min": 0.16562155,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.03915545,
+              "last": 0.03097026,
+              "max": 0.54624856,
+              "min": 0.0014164414,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017869053,
+              "last": 0.009781928,
+              "max": 0.11248357,
+              "min": 0.006820421,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.37925702,
+              "last": 40.638638,
+              "max": 9276.553,
+              "min": 0.37925702,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0020290955,
+              "last": 0.0006889971,
+              "max": 0.002272262,
+              "min": 5.040756e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.023743872,
+              "last": 0.028515661,
+              "max": 1.1497804,
+              "min": 0.012432573,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 5504.4194,
+              "last": 1797605.6,
+              "max": 20927688.0,
+              "min": 1.1356262,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.018748581,
+              "last": 0.017075496,
+              "max": 3835456.5,
+              "min": 0.009722112,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.01823074,
+              "last": 0.0077708033,
+              "max": 0.040232074,
+              "min": 3.044778e-06,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -180.68666666666667,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.21333333333333332,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -198.12
+            ],
+            [
+              1100000,
+              -181.62
+            ],
+            [
+              1150000,
+              -194.54
+            ],
+            [
+              1200000,
+              -189.42
+            ],
+            [
+              1250000,
+              -200.0
+            ],
+            [
+              1300000,
+              -183.56
+            ],
+            [
+              1350000,
+              -192.0
+            ],
+            [
+              1400000,
+              -172.7
+            ],
+            [
+              1450000,
+              -187.0
+            ],
+            [
+              1500000,
+              -182.36
+            ]
+          ],
+          "root_label": "local_task1",
+          "run_dir": "/home/nick/infom-runs/local_cube_single_priority_20260505_0005/runs/local_cube_single_task1/task1_seed0",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.02
+            ],
+            [
+              1100000,
+              0.18
+            ],
+            [
+              1150000,
+              0.04
+            ],
+            [
+              1200000,
+              0.12
+            ],
+            [
+              1250000,
+              0.0
+            ],
+            [
+              1300000,
+              0.16
+            ],
+            [
+              1350000,
+              0.06
+            ],
+            [
+              1400000,
+              0.3
+            ],
+            [
+              1450000,
+              0.16
+            ],
+            [
+              1500000,
+              0.18
+            ]
+          ],
+          "task": 1
+        }
+      ],
+      "slurm": {
+        "error_hits": [],
+        "logs": []
+      },
+      "submission_manifest": {}
+    },
+    {
+      "dataset_manifest": {},
+      "label": "unity_checkpointed_seed0",
+      "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002",
+      "records": [
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.94,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 50000,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -200.0,
+          "final_step": 1500000,
+          "final_success": 0.0,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "training grad norm spike 4.73e+03",
+            "validation critic loss spike 1.34e+08",
+            "validation flow loss spike 5.87e+05",
+            "training actor MSE spike 0.682",
+            "training actor q_mean positive spike 983",
+            "success collapse best 0.94 to final 0.00",
+            "paper-window success far below target by 71.2 pp"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.018650457,
+              "last": 0.51942825,
+              "max": 0.68177134,
+              "min": 0.011160164,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -93.82324,
+              "last": 771.77515,
+              "max": 982.82434,
+              "min": -96.077484,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018235924,
+              "last": 0.008459262,
+              "max": 0.020651588,
+              "min": 0.0072908686,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 2.3925295,
+              "last": 3.4732032,
+              "max": 9.625368,
+              "min": 1.2109306,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.039316617,
+              "last": 0.0016211406,
+              "max": 0.26263523,
+              "min": 0.0014982752,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.0179019,
+              "last": 0.007598019,
+              "max": 0.049275532,
+              "min": 0.006804483,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.3797522,
+              "last": 1437.0095,
+              "max": 4730.9336,
+              "min": 0.37178093,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0020271675,
+              "last": 5.0266026e-06,
+              "max": 0.0047723977,
+              "min": 2.7126978e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.020000113,
+              "last": 0.5464604,
+              "max": 0.66458064,
+              "min": 0.013462056,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 72.50889,
+              "last": 1262329.1,
+              "max": 134015000.0,
+              "min": 1.7831995,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.01876565,
+              "last": 0.009668523,
+              "max": 587075.94,
+              "min": 0.007860028,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.018221894,
+              "last": 0.0072085713,
+              "max": 0.04004594,
+              "min": 5.970422e-06,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -178.52,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.21333333333333335,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -200.0
+            ],
+            [
+              1100000,
+              -79.16
+            ],
+            [
+              1150000,
+              -86.86
+            ],
+            [
+              1200000,
+              -81.52
+            ],
+            [
+              1250000,
+              -109.3
+            ],
+            [
+              1300000,
+              -123.4
+            ],
+            [
+              1350000,
+              -199.12
+            ],
+            [
+              1400000,
+              -135.56
+            ],
+            [
+              1450000,
+              -200.0
+            ],
+            [
+              1500000,
+              -200.0
+            ]
+          ],
+          "root_label": "unity_checkpointed_seed0",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task1/task1_seed0",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.0
+            ],
+            [
+              1100000,
+              0.94
+            ],
+            [
+              1150000,
+              0.9
+            ],
+            [
+              1200000,
+              0.9
+            ],
+            [
+              1250000,
+              0.78
+            ],
+            [
+              1300000,
+              0.6
+            ],
+            [
+              1350000,
+              0.02
+            ],
+            [
+              1400000,
+              0.64
+            ],
+            [
+              1450000,
+              0.0
+            ],
+            [
+              1500000,
+              0.0
+            ]
+          ],
+          "task": 1
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.84,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 50000,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task2-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -188.92,
+          "final_step": 1500000,
+          "final_success": 0.08,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation critic loss spike 3.48e+07",
+            "validation flow loss spike 2.92e+05",
+            "training actor MSE spike 0.205",
+            "success collapse best 0.84 to final 0.08",
+            "paper-window success far below target by 59.1 pp"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.016313054,
+              "last": 0.15458986,
+              "max": 0.20470071,
+              "min": 0.014049609,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -93.351135,
+              "last": 50.790688,
+              "max": 50.790688,
+              "min": -93.575966,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018235853,
+              "last": 0.008608276,
+              "max": 0.020651048,
+              "min": 0.007407774,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 6.538333,
+              "last": 2.4156134,
+              "max": 6.599869,
+              "min": 1.8418288,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.039162785,
+              "last": 0.0020693033,
+              "max": 0.058103304,
+              "min": 0.001464704,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017869987,
+              "last": 0.0071733594,
+              "max": 0.018041374,
+              "min": 0.006778731,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.37914363,
+              "last": 449.9209,
+              "max": 566.6246,
+              "min": 0.37914363,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0015634344,
+              "last": 6.069003e-07,
+              "max": 0.0019612105,
+              "min": 4.8451867e-08,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.018708458,
+              "last": 0.172662,
+              "max": 0.20626579,
+              "min": 0.014839405,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 10.475636,
+              "last": 3407544.2,
+              "max": 34804224.0,
+              "min": 2.049848,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.018746542,
+              "last": 0.009093194,
+              "max": 292485.25,
+              "min": 0.007732552,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.012108875,
+              "last": 0.0073596993,
+              "max": 0.0460431,
+              "min": 5.738667e-07,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -175.01999999999998,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.19333333333333333,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -187.68
+            ],
+            [
+              1100000,
+              -104.24
+            ],
+            [
+              1150000,
+              -95.02
+            ],
+            [
+              1200000,
+              -106.78
+            ],
+            [
+              1250000,
+              -171.32
+            ],
+            [
+              1300000,
+              -122.88
+            ],
+            [
+              1350000,
+              -168.68
+            ],
+            [
+              1400000,
+              -143.2
+            ],
+            [
+              1450000,
+              -192.94
+            ],
+            [
+              1500000,
+              -188.92
+            ]
+          ],
+          "root_label": "unity_checkpointed_seed0",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task2/task2_seed0",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.1
+            ],
+            [
+              1100000,
+              0.72
+            ],
+            [
+              1150000,
+              0.84
+            ],
+            [
+              1200000,
+              0.64
+            ],
+            [
+              1250000,
+              0.32
+            ],
+            [
+              1300000,
+              0.56
+            ],
+            [
+              1350000,
+              0.22
+            ],
+            [
+              1400000,
+              0.44
+            ],
+            [
+              1450000,
+              0.06
+            ],
+            [
+              1500000,
+              0.08
+            ]
+          ],
+          "task": 2
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 1.0,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 50000,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task3-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -200.0,
+          "final_step": 1500000,
+          "final_success": 0.0,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation critic loss spike 2.79e+07",
+            "validation flow loss spike 2.92e+05",
+            "training actor MSE spike 0.435",
+            "success collapse best 1.00 to final 0.00"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.016410742,
+              "last": 0.40809232,
+              "max": 0.43457624,
+              "min": 0.01371074,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -91.32365,
+              "last": 62.235176,
+              "max": 62.235176,
+              "min": -93.79962,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018235853,
+              "last": 0.008608276,
+              "max": 0.020651048,
+              "min": 0.007407774,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 7.549242,
+              "last": 2.9552565,
+              "max": 7.549242,
+              "min": 1.6309822,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.039162785,
+              "last": 0.0020693033,
+              "max": 0.058103304,
+              "min": 0.001464704,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017869987,
+              "last": 0.0071733594,
+              "max": 0.018041374,
+              "min": 0.006778731,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.37914363,
+              "last": 983.77136,
+              "max": 983.77136,
+              "min": 0.37914363,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0030776719,
+              "last": 1.7239395e-06,
+              "max": 0.0033172867,
+              "min": 1.4804183e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.018440751,
+              "last": 0.39625984,
+              "max": 0.45969293,
+              "min": 0.0145804705,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 13.075611,
+              "last": 932201.0,
+              "max": 27903796.0,
+              "min": 2.1540232,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.018746542,
+              "last": 0.009093194,
+              "max": 292485.25,
+              "min": 0.007732552,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.006369214,
+              "last": 0.00023148599,
+              "max": 0.011088155,
+              "min": 2.2754797e-07,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -141.00666666666666,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.6133333333333334,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -171.42
+            ],
+            [
+              1100000,
+              -67.08
+            ],
+            [
+              1150000,
+              -70.42
+            ],
+            [
+              1200000,
+              -60.4
+            ],
+            [
+              1250000,
+              -78.5
+            ],
+            [
+              1300000,
+              -65.8
+            ],
+            [
+              1350000,
+              -155.52
+            ],
+            [
+              1400000,
+              -106.92
+            ],
+            [
+              1450000,
+              -116.1
+            ],
+            [
+              1500000,
+              -200.0
+            ]
+          ],
+          "root_label": "unity_checkpointed_seed0",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task3/task3_seed0",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.28
+            ],
+            [
+              1100000,
+              0.94
+            ],
+            [
+              1150000,
+              0.94
+            ],
+            [
+              1200000,
+              1.0
+            ],
+            [
+              1250000,
+              0.96
+            ],
+            [
+              1300000,
+              0.96
+            ],
+            [
+              1350000,
+              0.46
+            ],
+            [
+              1400000,
+              0.92
+            ],
+            [
+              1450000,
+              0.92
+            ],
+            [
+              1500000,
+              0.0
+            ]
+          ],
+          "task": 3
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.98,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 50000,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task4-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -96.98,
+          "final_step": 1500000,
+          "final_success": 0.84,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation critic loss spike 1.52e+07",
+            "validation flow loss spike 2.2e+06"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.023084898,
+              "last": 0.01736617,
+              "max": 0.0262183,
+              "min": 0.013701177,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -87.54428,
+              "last": -93.18381,
+              "max": -83.750984,
+              "min": -96.18643,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018235924,
+              "last": 0.008459262,
+              "max": 0.020651588,
+              "min": 0.0072908686,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 9.345921,
+              "last": 3.6013167,
+              "max": 19.556526,
+              "min": 1.2590784,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.03929591,
+              "last": 0.0019226389,
+              "max": 0.3565179,
+              "min": 0.0013174049,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017872486,
+              "last": 0.006993371,
+              "max": 0.061975993,
+              "min": 0.0066093807,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.3786899,
+              "last": 55.141117,
+              "max": 103.30763,
+              "min": 0.3786899,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0029811938,
+              "last": 6.536719e-07,
+              "max": 0.004756834,
+              "min": 1.5212495e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.022672093,
+              "last": 0.027396593,
+              "max": 0.17645304,
+              "min": 0.013878322,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 11.17791,
+              "last": 1519196.9,
+              "max": 15171264.0,
+              "min": 1.8312478,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.018753463,
+              "last": 0.009285378,
+              "max": 2196616.5,
+              "min": 0.0077769435,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.009626897,
+              "last": 0.019895226,
+              "max": 0.02934717,
+              "min": 7.1583318e-06,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -94.74,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.82,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -200.0
+            ],
+            [
+              1100000,
+              -98.34
+            ],
+            [
+              1150000,
+              -86.06
+            ],
+            [
+              1200000,
+              -83.68
+            ],
+            [
+              1250000,
+              -70.76
+            ],
+            [
+              1300000,
+              -71.14
+            ],
+            [
+              1350000,
+              -96.02
+            ],
+            [
+              1400000,
+              -94.8
+            ],
+            [
+              1450000,
+              -92.44
+            ],
+            [
+              1500000,
+              -96.98
+            ]
+          ],
+          "root_label": "unity_checkpointed_seed0",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task4/task4_seed0",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.0
+            ],
+            [
+              1100000,
+              0.82
+            ],
+            [
+              1150000,
+              0.84
+            ],
+            [
+              1200000,
+              0.88
+            ],
+            [
+              1250000,
+              0.98
+            ],
+            [
+              1300000,
+              0.94
+            ],
+            [
+              1350000,
+              0.84
+            ],
+            [
+              1400000,
+              0.82
+            ],
+            [
+              1450000,
+              0.8
+            ],
+            [
+              1500000,
+              0.84
+            ]
+          ],
+          "task": 4
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.96,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 50000,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task5-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -101.42,
+          "final_step": 1500000,
+          "final_success": 0.86,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation flow loss spike 1.67e+06"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.016286345,
+              "last": 0.016551562,
+              "max": 0.022116309,
+              "min": 0.013334907,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -91.10152,
+              "last": -93.849976,
+              "max": -89.66178,
+              "min": -95.24732,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018235853,
+              "last": 0.008608276,
+              "max": 0.020651048,
+              "min": 0.007407774,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 4.3246913,
+              "last": 2.5893388,
+              "max": 6.183603,
+              "min": 1.6503528,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.039247416,
+              "last": 0.0023504477,
+              "max": 0.585775,
+              "min": 0.0020073955,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.01790451,
+              "last": 0.007679811,
+              "max": 0.046858374,
+              "min": 0.0070229396,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.38015652,
+              "last": 41.71841,
+              "max": 73.27254,
+              "min": 0.37864602,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0041505257,
+              "last": 1.6506095e-06,
+              "max": 0.0041505257,
+              "min": 2.74073e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.019993281,
+              "last": 0.025717137,
+              "max": 0.0858734,
+              "min": 0.012618481,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 10.0547695,
+              "last": 20405.357,
+              "max": 127977.81,
+              "min": 1.6634545,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.018764352,
+              "last": 0.00956458,
+              "max": 1673108.2,
+              "min": 0.0079780845,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.025555938,
+              "last": 1.0908468e-06,
+              "max": 0.04211601,
+              "min": 9.337715e-07,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -112.4,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.7466666666666667,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -200.0
+            ],
+            [
+              1100000,
+              -184.16
+            ],
+            [
+              1150000,
+              -97.98
+            ],
+            [
+              1200000,
+              -102.18
+            ],
+            [
+              1250000,
+              -95.7
+            ],
+            [
+              1300000,
+              -87.7
+            ],
+            [
+              1350000,
+              -124.34
+            ],
+            [
+              1400000,
+              -124.22
+            ],
+            [
+              1450000,
+              -111.56
+            ],
+            [
+              1500000,
+              -101.42
+            ]
+          ],
+          "root_label": "unity_checkpointed_seed0",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/runs/unity_cube_single_paper_repro_task5/task5_seed0",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.0
+            ],
+            [
+              1100000,
+              0.18
+            ],
+            [
+              1150000,
+              0.84
+            ],
+            [
+              1200000,
+              0.8
+            ],
+            [
+              1250000,
+              0.82
+            ],
+            [
+              1300000,
+              0.96
+            ],
+            [
+              1350000,
+              0.68
+            ],
+            [
+              1400000,
+              0.66
+            ],
+            [
+              1450000,
+              0.72
+            ],
+            [
+              1500000,
+              0.86
+            ]
+          ],
+          "task": 5
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": 0.0,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.0,
+          "checkpoint_at_end": 1,
+          "checkpoint_interval": 2,
+          "dataset_dir": null,
+          "enable_tensorboard": 1,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 1,
+          "eval_interval": 1,
+          "eval_rows": 2,
+          "final_return": -200.0,
+          "final_step": 4,
+          "final_success": 0.0,
+          "finetuning_size": 500000,
+          "finetuning_steps": 2,
+          "health_flags": [],
+          "metrics": {
+            "training/bc/mse": {
+              "count": 2,
+              "first": 0.19607897,
+              "last": 0.20898966,
+              "max": 0.20898966,
+              "min": 0.19607897,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 2,
+              "first": 571.5763,
+              "last": 306.33618,
+              "max": 571.5763,
+              "min": 306.33618,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 4,
+              "first": 3.560938,
+              "last": 2.270883,
+              "max": 3.560938,
+              "min": 2.270883,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 4,
+              "first": 0.20545453,
+              "last": 0.19089495,
+              "max": 0.28289306,
+              "min": 0.16315427,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 4,
+              "first": 2.0346437,
+              "last": 90.0587,
+              "max": 158.6484,
+              "min": 2.0346437,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 2,
+              "first": 2.5121799,
+              "last": 1.2294354,
+              "max": 2.5121799,
+              "min": 1.2294354,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 2,
+              "first": 0.18029761,
+              "last": 0.15986632,
+              "max": 0.18029761,
+              "min": 0.15986632,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 2,
+              "first": 237.14507,
+              "last": 196.11288,
+              "max": 237.14507,
+              "min": 196.11288,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 4,
+              "first": 0.2885688,
+              "last": 0.15370889,
+              "max": 0.2885688,
+              "min": 0.15325403,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 2,
+              "first": 1.5732149,
+              "last": 1.2688979,
+              "max": 1.5732149,
+              "min": 1.2688979,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [
+            400002,
+            450002,
+            500002
+          ],
+          "paper_return": null,
+          "paper_steps": [
+            400002,
+            450002,
+            500002
+          ],
+          "paper_success": null,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 2,
+          "protocol_issues": [
+            "pretraining_steps=2 expected 1000000",
+            "finetuning_steps=2 expected 500000",
+            "eval_interval=1 expected 50000",
+            "eval_episodes=1 expected 50"
+          ],
+          "resume_from_checkpoint": 1,
+          "return_curve": [
+            [
+              3,
+              -200.0
+            ],
+            [
+              4,
+              -200.0
+            ]
+          ],
+          "root_label": "unity_checkpointed_seed0",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/smoke_runs/unity_cube_single_paper_repro_smoke/smoke",
+          "seed": 0,
+          "success_curve": [
+            [
+              3,
+              0.0
+            ],
+            [
+              4,
+              0.0
+            ]
+          ],
+          "task": 1
+        }
+      ],
+      "slurm": {
+        "error_hits": [],
+        "logs": [
+          {
+            "gpu": {
+              "cuda": "13.1",
+              "driver": "590.48.01",
+              "nvsmi": "590.48.01"
+            },
+            "host": "gpu013",
+            "job": "56703078",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/infom-repro-smoke-56703078.out",
+            "repo": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+            "seed": null,
+            "task": null
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "uri-gpu012",
+            "job": "56703080",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/infom-repro-t1-s0-56703080.out",
+            "repo": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+            "seed": "0",
+            "task": "1"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "uri-gpu004",
+            "job": "56704942",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/infom-repro-t2-s0-56704942.out",
+            "repo": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+            "seed": "0",
+            "task": "2"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "uri-gpu004",
+            "job": "56704943",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/infom-repro-t3-s0-56704943.out",
+            "repo": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+            "seed": "0",
+            "task": "3"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "uri-gpu012",
+            "job": "56704944",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/infom-repro-t4-s0-56704944.out",
+            "repo": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+            "seed": "0",
+            "task": "4"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "uri-gpu004",
+            "job": "56704945",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/infom-repro-t5-s0-56704945.out",
+            "repo": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+            "seed": "0",
+            "task": "5"
+          }
+        ]
+      },
+      "submission_manifest": {
+        "checkpoint_interval": 50000,
+        "checkpoint_keep": 3,
+        "constraint": "h100|a100",
+        "cpus_per_task": 8,
+        "created_at": "2026-05-05T04:31:50.346216+00:00",
+        "exclude": "gpu026,gpu030",
+        "expected_commit": null,
+        "mem": "32G",
+        "partition": "gpu,gpu-preempt",
+        "probe_specs": [
+          [
+            "gpu_h100_a100",
+            "gpu",
+            "h100|a100"
+          ],
+          [
+            "gpu_l40s",
+            "gpu",
+            "l40s"
+          ],
+          [
+            "gpu-preempt_h100_a100",
+            "gpu-preempt",
+            "h100|a100"
+          ],
+          [
+            "gpu-preempt_l40s",
+            "gpu-preempt",
+            "l40s"
+          ]
+        ],
+        "python": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/tools/miniforge3/envs/infom-obs/bin/python",
+        "repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs",
+        "run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002",
+        "scripts": {
+          "train_t2_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/train_t2_s0.sbatch",
+          "train_t3_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/train_t3_s0.sbatch",
+          "train_t4_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/train_t4_s0.sbatch",
+          "train_t5_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_checkpoint_smoke_20260505_0002/slurm/train_t5_s0.sbatch"
+        },
+        "seeds": [
+          0
+        ],
+        "stage": "campaign",
+        "tasks": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "time_limit": "12:00:00",
+        "upstream_commit": "ed0761d7a349fb34b201071f98ac88b6d91cafe2"
+      }
+    },
+    {
+      "dataset_manifest": {
+        "dataset_dir": "/home/bhuo_umass_edu/.ogbench/data",
+        "files": {
+          "cube-single-play-ft-v0-val.npz": {
+            "arrays": {
+              "actions": {
+                "dtype": "float32",
+                "shape": [
+                  50050,
+                  5
+                ]
+              },
+              "observations": {
+                "dtype": "float32",
+                "shape": [
+                  50050,
+                  28
+                ]
+              },
+              "qpos": {
+                "dtype": "float32",
+                "shape": [
+                  50050,
+                  21
+                ]
+              },
+              "qvel": {
+                "dtype": "float32",
+                "shape": [
+                  50050,
+                  20
+                ]
+              },
+              "terminals": {
+                "dtype": "bool",
+                "shape": [
+                  50050
+                ]
+              }
+            },
+            "bytes": 12646389,
+            "sha256": "efe81dd66aea2952ebc942d98b2f303540ab18a7879033a724cd80687d410b1e"
+          },
+          "cube-single-play-ft-v0.npz": {
+            "arrays": {
+              "actions": {
+                "dtype": "float32",
+                "shape": [
+                  500500,
+                  5
+                ]
+              },
+              "observations": {
+                "dtype": "float32",
+                "shape": [
+                  500500,
+                  28
+                ]
+              },
+              "qpos": {
+                "dtype": "float32",
+                "shape": [
+                  500500,
+                  21
+                ]
+              },
+              "qvel": {
+                "dtype": "float32",
+                "shape": [
+                  500500,
+                  20
+                ]
+              },
+              "terminals": {
+                "dtype": "bool",
+                "shape": [
+                  500500
+                ]
+              }
+            },
+            "bytes": 126403421,
+            "sha256": "f91817a1aba8f379676ef1aa8b24d8fd5e1bf4ca527301327a50a9b1fc38ae07"
+          },
+          "cube-single-play-v0-val.npz": {
+            "arrays": {
+              "actions": {
+                "dtype": "float32",
+                "shape": [
+                  100100,
+                  5
+                ]
+              },
+              "observations": {
+                "dtype": "float32",
+                "shape": [
+                  100100,
+                  28
+                ]
+              },
+              "qpos": {
+                "dtype": "float32",
+                "shape": [
+                  100100,
+                  21
+                ]
+              },
+              "qvel": {
+                "dtype": "float32",
+                "shape": [
+                  100100,
+                  20
+                ]
+              },
+              "terminals": {
+                "dtype": "bool",
+                "shape": [
+                  100100
+                ]
+              }
+            },
+            "bytes": 25687020,
+            "sha256": "96d07401bdebdc3f0ea6d56ed1333863e0962f441483adc2c43b83105046eb00"
+          },
+          "cube-single-play-v0.npz": {
+            "arrays": {
+              "actions": {
+                "dtype": "float32",
+                "shape": [
+                  1001000,
+                  5
+                ]
+              },
+              "observations": {
+                "dtype": "float32",
+                "shape": [
+                  1001000,
+                  28
+                ]
+              },
+              "qpos": {
+                "dtype": "float32",
+                "shape": [
+                  1001000,
+                  21
+                ]
+              },
+              "qvel": {
+                "dtype": "float32",
+                "shape": [
+                  1001000,
+                  20
+                ]
+              },
+              "terminals": {
+                "dtype": "bool",
+                "shape": [
+                  1001000
+                ]
+              }
+            },
+            "bytes": 256728298,
+            "sha256": "80f3b6fd27f4f9d9e9eb6f0d07d6951559012f45b1e15ea4046ef8ecd8d3684e"
+          }
+        }
+      },
+      "label": "unity_upstream_task1_4seed",
+      "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236",
+      "records": [
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": null,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.9,
+          "checkpoint_at_end": null,
+          "checkpoint_interval": null,
+          "dataset_dir": null,
+          "enable_tensorboard": null,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -117.06,
+          "final_step": 1500000,
+          "final_success": 0.64,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation critic loss spike 4.11e+06",
+            "validation flow loss spike 2.86e+05",
+            "paper-window success far below target by 27.8 pp"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.016864916,
+              "last": 0.023151433,
+              "max": 0.026064226,
+              "min": 0.013820546,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -94.21059,
+              "last": -90.49478,
+              "max": -89.167984,
+              "min": -97.203636,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018236155,
+              "last": 0.008209405,
+              "max": 0.020650977,
+              "min": 0.007498361,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 3.7608943,
+              "last": 2.7200537,
+              "max": 7.014262,
+              "min": 0.9423779,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.039094318,
+              "last": 0.0021171845,
+              "max": 0.29868585,
+              "min": 0.0014383553,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017852515,
+              "last": 0.006755991,
+              "max": 0.041272115,
+              "min": 0.006551228,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.37865502,
+              "last": 42.743584,
+              "max": 74.21684,
+              "min": 0.37865502,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0020290955,
+              "last": 0.0006889971,
+              "max": 0.002272262,
+              "min": 5.040756e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.021344535,
+              "last": 0.027820913,
+              "max": 0.5535152,
+              "min": 0.013079295,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 18.41752,
+              "last": 263654.25,
+              "max": 4107210.8,
+              "min": 2.4690304,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.01874214,
+              "last": 0.08305025,
+              "max": 286460.34,
+              "min": 0.0078535,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.01823074,
+              "last": 0.0077708033,
+              "max": 0.040232074,
+              "min": 3.044778e-06,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -125.20666666666666,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.6466666666666667,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": null,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -200.0
+            ],
+            [
+              1100000,
+              -135.44
+            ],
+            [
+              1150000,
+              -118.52
+            ],
+            [
+              1200000,
+              -114.78
+            ],
+            [
+              1250000,
+              -82.48
+            ],
+            [
+              1300000,
+              -121.88
+            ],
+            [
+              1350000,
+              -136.26
+            ],
+            [
+              1400000,
+              -152.2
+            ],
+            [
+              1450000,
+              -106.36
+            ],
+            [
+              1500000,
+              -117.06
+            ]
+          ],
+          "root_label": "unity_upstream_task1_4seed",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd000_s_56693855.0.20260504_223853",
+          "seed": 0,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.0
+            ],
+            [
+              1100000,
+              0.58
+            ],
+            [
+              1150000,
+              0.72
+            ],
+            [
+              1200000,
+              0.64
+            ],
+            [
+              1250000,
+              0.9
+            ],
+            [
+              1300000,
+              0.62
+            ],
+            [
+              1350000,
+              0.6
+            ],
+            [
+              1400000,
+              0.44
+            ],
+            [
+              1450000,
+              0.86
+            ],
+            [
+              1500000,
+              0.64
+            ]
+          ],
+          "task": 1
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": null,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.16,
+          "checkpoint_at_end": null,
+          "checkpoint_interval": null,
+          "dataset_dir": null,
+          "enable_tensorboard": null,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -200.0,
+          "final_step": 1500000,
+          "final_success": 0.0,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "paper-window success far below target by 89.8 pp"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.01921547,
+              "last": 0.012348696,
+              "max": 0.025145048,
+              "min": 0.010221555,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -98.59433,
+              "last": -92.23935,
+              "max": -91.829346,
+              "min": -100.80499,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.021461677,
+              "last": 0.008225461,
+              "max": 0.022196606,
+              "min": 0.007476619,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 1.1982319,
+              "last": 4.2329206,
+              "max": 5.5770774,
+              "min": 0.05155573,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.039516285,
+              "last": 0.020183355,
+              "max": 0.8295019,
+              "min": 0.020183355,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017641472,
+              "last": 0.0086170705,
+              "max": 0.09766112,
+              "min": 0.008568745,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.37143543,
+              "last": 30.372429,
+              "max": 357.58694,
+              "min": 0.37143543,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0049593644,
+              "last": 4.925661e-06,
+              "max": 0.0057854587,
+              "min": 2.7000522e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.021442277,
+              "last": 0.035164334,
+              "max": 14.546344,
+              "min": 0.014404845,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 1.9330872,
+              "last": 4.269994,
+              "max": 2193.435,
+              "min": 0.16182655,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017970726,
+              "last": 0.010271329,
+              "max": 0.20673957,
+              "min": 0.010061265,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.019139417,
+              "last": 0.01948027,
+              "max": 0.04825797,
+              "min": 1.1416004e-06,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -197.50666666666666,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.026666666666666665,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": null,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -200.0
+            ],
+            [
+              1100000,
+              -200.0
+            ],
+            [
+              1150000,
+              -195.46
+            ],
+            [
+              1200000,
+              -192.16
+            ],
+            [
+              1250000,
+              -197.2
+            ],
+            [
+              1300000,
+              -186.0
+            ],
+            [
+              1350000,
+              -185.34
+            ],
+            [
+              1400000,
+              -194.26
+            ],
+            [
+              1450000,
+              -198.26
+            ],
+            [
+              1500000,
+              -200.0
+            ]
+          ],
+          "root_label": "unity_upstream_task1_4seed",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd001_s_56693856.0.20260504_223748",
+          "seed": 1,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.0
+            ],
+            [
+              1100000,
+              0.0
+            ],
+            [
+              1150000,
+              0.08
+            ],
+            [
+              1200000,
+              0.1
+            ],
+            [
+              1250000,
+              0.02
+            ],
+            [
+              1300000,
+              0.16
+            ],
+            [
+              1350000,
+              0.12
+            ],
+            [
+              1400000,
+              0.06
+            ],
+            [
+              1450000,
+              0.02
+            ],
+            [
+              1500000,
+              0.0
+            ]
+          ],
+          "task": 1
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": null,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 0.96,
+          "checkpoint_at_end": null,
+          "checkpoint_interval": null,
+          "dataset_dir": null,
+          "enable_tensorboard": null,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -196.92,
+          "final_step": 1500000,
+          "final_success": 0.02,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation critic loss spike 1.41e+08",
+            "training actor MSE spike 0.232",
+            "success collapse best 0.96 to final 0.02",
+            "paper-window success far below target by 65.8 pp"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.02404568,
+              "last": 0.22309871,
+              "max": 0.23217459,
+              "min": 0.012265484,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -93.15349,
+              "last": 23.315947,
+              "max": 23.99418,
+              "min": -95.986664,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.015731996,
+              "last": 0.007947547,
+              "max": 0.022521032,
+              "min": 0.0074044093,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 1.3088522,
+              "last": 3.521831,
+              "max": 8.533412,
+              "min": 1.3088522,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.033540845,
+              "last": 0.0017394269,
+              "max": 0.23221684,
+              "min": 0.0012778487,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.01711609,
+              "last": 0.007911644,
+              "max": 0.11893261,
+              "min": 0.0064306874,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.32153225,
+              "last": 458.87573,
+              "max": 928.0781,
+              "min": 0.32153225,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0058261184,
+              "last": 7.1322675e-06,
+              "max": 0.0058261184,
+              "min": 9.299083e-08,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.024334922,
+              "last": 0.21632682,
+              "max": 2.6607769,
+              "min": 0.013779442,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 53.459663,
+              "last": 78939.125,
+              "max": 141203200.0,
+              "min": 2.4886298,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017888958,
+              "last": 0.012531404,
+              "max": 43038.96,
+              "min": 0.008056913,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0067410637,
+              "last": 0.014607498,
+              "max": 0.03203804,
+              "min": 5.3239593e-05,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -172.71333333333334,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.26666666666666666,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": null,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -199.76
+            ],
+            [
+              1100000,
+              -194.4
+            ],
+            [
+              1150000,
+              -92.9
+            ],
+            [
+              1200000,
+              -75.5
+            ],
+            [
+              1250000,
+              -118.34
+            ],
+            [
+              1300000,
+              -75.96
+            ],
+            [
+              1350000,
+              -91.18
+            ],
+            [
+              1400000,
+              -128.18
+            ],
+            [
+              1450000,
+              -193.04
+            ],
+            [
+              1500000,
+              -196.92
+            ]
+          ],
+          "root_label": "unity_upstream_task1_4seed",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd002_s_56693857.0.20260504_223753",
+          "seed": 2,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.02
+            ],
+            [
+              1100000,
+              0.08
+            ],
+            [
+              1150000,
+              0.96
+            ],
+            [
+              1200000,
+              0.9
+            ],
+            [
+              1250000,
+              0.78
+            ],
+            [
+              1300000,
+              0.94
+            ],
+            [
+              1350000,
+              0.92
+            ],
+            [
+              1400000,
+              0.7
+            ],
+            [
+              1450000,
+              0.08
+            ],
+            [
+              1500000,
+              0.02
+            ]
+          ],
+          "task": 1
+        },
+        {
+          "agent": {
+            "actor_freq": 4,
+            "agent_name": "infom",
+            "alpha": 30.0,
+            "batch_size": 256,
+            "bridge_loss_weight": null,
+            "critic_latent_type": "prior",
+            "discount": 0.99,
+            "encoder": null,
+            "expectile": 0.95,
+            "kl_weight": 0.05,
+            "latent_dim": 512,
+            "lr": 0.0003,
+            "num_flow_goals": 16,
+            "num_flow_steps": 10,
+            "q_agg": "min",
+            "tau": 0.005
+          },
+          "best_success": 1.0,
+          "checkpoint_at_end": null,
+          "checkpoint_interval": null,
+          "dataset_dir": null,
+          "enable_tensorboard": null,
+          "env_name": "cube-single-play-singletask-task1-v0",
+          "eval_episodes": 50,
+          "eval_interval": 50000,
+          "eval_rows": 11,
+          "final_return": -124.88,
+          "final_step": 1500000,
+          "final_success": 0.7,
+          "finetuning_size": 500000,
+          "finetuning_steps": 500000,
+          "health_flags": [
+            "validation flow loss spike 3.2e+05"
+          ],
+          "metrics": {
+            "training/actor/mse": {
+              "count": 100,
+              "first": 0.01847915,
+              "last": 0.018753355,
+              "max": 0.027013635,
+              "min": 0.013047538,
+              "nonfinite": 0
+            },
+            "training/actor/q_mean": {
+              "count": 100,
+              "first": -89.04765,
+              "last": -91.23613,
+              "max": -88.67964,
+              "min": -98.57988,
+              "nonfinite": 0
+            },
+            "training/bc/mse": {
+              "count": 200,
+              "first": 0.018022282,
+              "last": 0.007737337,
+              "max": 0.020817226,
+              "min": 0.007517852,
+              "nonfinite": 0
+            },
+            "training/critic/critic_loss": {
+              "count": 100,
+              "first": 5.082649,
+              "last": 2.7213416,
+              "max": 8.288609,
+              "min": 1.3828475,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/kl_loss": {
+              "count": 300,
+              "first": 0.033046193,
+              "last": 0.0015969198,
+              "max": 0.38247856,
+              "min": 0.0015410024,
+              "nonfinite": 0
+            },
+            "training/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017272137,
+              "last": 0.0071063065,
+              "max": 0.067843094,
+              "min": 0.006534822,
+              "nonfinite": 0
+            },
+            "training/grad/norm": {
+              "count": 300,
+              "first": 0.32441866,
+              "last": 27.759985,
+              "max": 130.78853,
+              "min": 0.32441866,
+              "nonfinite": 0
+            },
+            "training/reward/reward_loss": {
+              "count": 100,
+              "first": 0.0031201513,
+              "last": 0.0029694003,
+              "max": 0.0037270961,
+              "min": 2.4382643e-07,
+              "nonfinite": 0
+            },
+            "validation/actor/mse": {
+              "count": 100,
+              "first": 0.024027651,
+              "last": 0.029058928,
+              "max": 2.4564364,
+              "min": 0.013166686,
+              "nonfinite": 0
+            },
+            "validation/critic/critic_loss": {
+              "count": 100,
+              "first": 21.91948,
+              "last": 51.314457,
+              "max": 372028.3,
+              "min": 1.4167817,
+              "nonfinite": 0
+            },
+            "validation/flow_occupancy/neg_elbo_loss": {
+              "count": 300,
+              "first": 0.017468508,
+              "last": 58480.46,
+              "max": 319587.22,
+              "min": 0.007984921,
+              "nonfinite": 0
+            },
+            "validation/reward/reward_loss": {
+              "count": 100,
+              "first": 0.019797524,
+              "last": 0.0069221808,
+              "max": 0.04721856,
+              "min": 3.3778608e-05,
+              "nonfinite": 0
+            }
+          },
+          "missing_paper_steps": [],
+          "paper_return": -119.95333333333333,
+          "paper_steps": [
+            1400000,
+            1450000,
+            1500000
+          ],
+          "paper_success": 0.7133333333333334,
+          "pretraining_size": 1000000,
+          "pretraining_steps": 1000000,
+          "protocol_issues": [],
+          "resume_from_checkpoint": null,
+          "return_curve": [
+            [
+              1000001,
+              -200.0
+            ],
+            [
+              1050000,
+              -151.44
+            ],
+            [
+              1100000,
+              -122.04
+            ],
+            [
+              1150000,
+              -75.68
+            ],
+            [
+              1200000,
+              -92.14
+            ],
+            [
+              1250000,
+              -72.22
+            ],
+            [
+              1300000,
+              -130.26
+            ],
+            [
+              1350000,
+              -113.62
+            ],
+            [
+              1400000,
+              -116.5
+            ],
+            [
+              1450000,
+              -118.48
+            ],
+            [
+              1500000,
+              -124.88
+            ]
+          ],
+          "root_label": "unity_upstream_task1_4seed",
+          "run_dir": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/runs/unity_cube_single_paper_repro_task1/sd003_s_56693858.0.20260504_224004",
+          "seed": 3,
+          "success_curve": [
+            [
+              1000001,
+              0.0
+            ],
+            [
+              1050000,
+              0.48
+            ],
+            [
+              1100000,
+              0.76
+            ],
+            [
+              1150000,
+              0.88
+            ],
+            [
+              1200000,
+              0.92
+            ],
+            [
+              1250000,
+              1.0
+            ],
+            [
+              1300000,
+              0.6
+            ],
+            [
+              1350000,
+              0.76
+            ],
+            [
+              1400000,
+              0.76
+            ],
+            [
+              1450000,
+              0.68
+            ],
+            [
+              1500000,
+              0.7
+            ]
+          ],
+          "task": 1
+        }
+      ],
+      "slurm": {
+        "error_hits": [
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s0-56693859.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s0-56693859.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s0-56693859.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s0-56693859.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s0-56693859.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s1-56693860.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s1-56693860.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s1-56693860.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s1-56693860.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s1-56693860.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s2-56693861.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s2-56693861.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s2-56693861.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s2-56693861.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s2-56693861.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s3-56693862.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s3-56693862.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s3-56693862.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s3-56693862.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s3-56693862.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s0-56693863.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s0-56693863.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s0-56693863.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s0-56693863.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s0-56693863.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s1-56693864.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s1-56693864.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s1-56693864.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s1-56693864.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s1-56693864.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s2-56693865.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s2-56693865.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s2-56693865.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s2-56693865.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s2-56693865.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s3-56693866.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s3-56693866.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s3-56693866.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s3-56693866.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s3-56693866.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s0-56693867.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s0-56693867.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s0-56693867.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s0-56693867.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s0-56693867.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s1-56693868.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s1-56693868.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s1-56693868.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s1-56693868.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s1-56693868.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s2-56693869.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s2-56693869.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s2-56693869.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s2-56693869.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s2-56693869.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s3-56693870.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s3-56693870.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s3-56693870.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s3-56693870.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s3-56693870.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s0-56693871.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s0-56693871.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s0-56693871.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s0-56693871.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s0-56693871.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s1-56693872.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s1-56693872.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s1-56693872.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s1-56693872.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s1-56693872.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s2-56693873.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s2-56693873.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s2-56693873.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s2-56693873.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s2-56693873.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          },
+          {
+            "line": 2,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s3-56693874.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 11,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s3-56693874.err",
+            "text": "jaxlib._jax.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA"
+          },
+          {
+            "line": 15,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s3-56693874.err",
+            "text": "jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these."
+          },
+          {
+            "line": 19,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s3-56693874.err",
+            "text": "Traceback (most recent call last):"
+          },
+          {
+            "line": 48,
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s3-56693874.err",
+            "text": "RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)"
+          }
+        ],
+        "logs": [
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu027",
+            "job": "56693855",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t1-s0-56693855.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "0",
+            "task": "1"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu032",
+            "job": "56693856",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t1-s1-56693856.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "1",
+            "task": "1"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu029",
+            "job": "56693857",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t1-s2-56693857.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "2",
+            "task": "1"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693858",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t1-s3-56693858.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "3",
+            "task": "1"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693859",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s0-56693859.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "0",
+            "task": "2"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693860",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s1-56693860.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "1",
+            "task": "2"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693861",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s2-56693861.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "2",
+            "task": "2"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693862",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t2-s3-56693862.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "3",
+            "task": "2"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693863",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s0-56693863.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "0",
+            "task": "3"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693864",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s1-56693864.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "1",
+            "task": "3"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693865",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s2-56693865.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "2",
+            "task": "3"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693866",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t3-s3-56693866.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "3",
+            "task": "3"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693867",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s0-56693867.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "0",
+            "task": "4"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693868",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s1-56693868.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "1",
+            "task": "4"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693869",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s2-56693869.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "2",
+            "task": "4"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693870",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t4-s3-56693870.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "3",
+            "task": "4"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693871",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s0-56693871.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "0",
+            "task": "5"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693872",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s1-56693872.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "1",
+            "task": "5"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693873",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s2-56693873.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "2",
+            "task": "5"
+          },
+          {
+            "gpu": {
+              "cuda": "13.0",
+              "driver": "580.126.09",
+              "nvsmi": "580.126.09"
+            },
+            "host": "gpu030",
+            "job": "56693874",
+            "path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/infom-repro-t5-s3-56693874.out",
+            "repo": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+            "seed": "3",
+            "task": "5"
+          }
+        ]
+      },
+      "submission_manifest": {
+        "created_at": "2026-05-04T22:37:19.030491+00:00",
+        "exclude": "gpu026",
+        "python": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/tools/miniforge3/envs/infom-obs/bin/python",
+        "repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-upstream-repro-ed0761d",
+        "run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236",
+        "scripts": {
+          "train_t1_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t1_s0.sbatch",
+          "train_t1_s1": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t1_s1.sbatch",
+          "train_t1_s2": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t1_s2.sbatch",
+          "train_t1_s3": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t1_s3.sbatch",
+          "train_t2_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t2_s0.sbatch",
+          "train_t2_s1": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t2_s1.sbatch",
+          "train_t2_s2": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t2_s2.sbatch",
+          "train_t2_s3": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t2_s3.sbatch",
+          "train_t3_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t3_s0.sbatch",
+          "train_t3_s1": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t3_s1.sbatch",
+          "train_t3_s2": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t3_s2.sbatch",
+          "train_t3_s3": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t3_s3.sbatch",
+          "train_t4_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t4_s0.sbatch",
+          "train_t4_s1": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t4_s1.sbatch",
+          "train_t4_s2": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t4_s2.sbatch",
+          "train_t4_s3": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t4_s3.sbatch",
+          "train_t5_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t5_s0.sbatch",
+          "train_t5_s1": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t5_s1.sbatch",
+          "train_t5_s2": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t5_s2.sbatch",
+          "train_t5_s3": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_repro_retry_exclude_gpu026_20260504_2236/slurm/train_t5_s3.sbatch"
+        },
+        "seeds": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "stage": "campaign",
+        "tasks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "upstream_commit": "ed0761d7a349fb34b201071f98ac88b6d91cafe2"
+      }
+    }
+  ],
+  "source_environments": [
+    {
+      "dataset_hashes": {
+        "dataset_dir": "/home/nick/.ogbench/data",
+        "files": {
+          "cube-single-play-ft-v0-val.npz": {
+            "bytes": 12646389,
+            "sha256": "efe81dd66aea2952ebc942d98b2f303540ab18a7879033a724cd80687d410b1e"
+          },
+          "cube-single-play-ft-v0.npz": {
+            "bytes": 126403421,
+            "sha256": "f91817a1aba8f379676ef1aa8b24d8fd5e1bf4ca527301327a50a9b1fc38ae07"
+          },
+          "cube-single-play-v0-val.npz": {
+            "bytes": 25687020,
+            "sha256": "96d07401bdebdc3f0ea6d56ed1333863e0962f441483adc2c43b83105046eb00"
+          },
+          "cube-single-play-v0.npz": {
+            "bytes": 256728298,
+            "sha256": "80f3b6fd27f4f9d9e9eb6f0d07d6951559012f45b1e15ea4046ef8ecd8d3684e"
+          }
+        }
+      },
+      "git_head": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+      "git_status": "## feature/tensorboard-local-ogbench-runs...origin/feature/tensorboard-local-ogbench-runs\n M main.py\n M utils/flax_utils.py\n M utils/log_utils.py\n?? runs/reports/ogbench_paper_repro/\n?? scripts/diagnose_ogbench_paper_repro.py\n?? scripts/jax_cuda_probe.py\n?? scripts/submit_ogbench_cube_single_repro_unity.py\n?? scripts/submit_ogbench_repro_ab_unity.py\n?? scripts/summarize_ogbench_paper_repro.py",
+      "packages": {
+        "distrax": "0.1.5",
+        "dm_control": "1.0.39",
+        "flax": "0.10.7",
+        "gymnasium": "0.29.1",
+        "jax": "0.6.2",
+        "jaxlib": "0.6.2",
+        "ml_collections": "1.1.0",
+        "mujoco": "3.7.0",
+        "numpy": "2.2.6",
+        "ogbench": "1.1.0",
+        "optax": "0.2.8"
+      },
+      "python": "3.10.16 (main, Dec 11 2024, 16:24:50) [GCC 11.2.0]",
+      "repo_path": "/home/nick/infom-learning-from-obs"
+    },
+    {
+      "dataset_hashes": {
+        "dataset_dir": "/home/bhuo_umass_edu/.ogbench/data",
+        "files": {
+          "cube-single-play-ft-v0-val.npz": {
+            "bytes": 12646389,
+            "sha256": "efe81dd66aea2952ebc942d98b2f303540ab18a7879033a724cd80687d410b1e"
+          },
+          "cube-single-play-ft-v0.npz": {
+            "bytes": 126403421,
+            "sha256": "f91817a1aba8f379676ef1aa8b24d8fd5e1bf4ca527301327a50a9b1fc38ae07"
+          },
+          "cube-single-play-v0-val.npz": {
+            "bytes": 25687020,
+            "sha256": "96d07401bdebdc3f0ea6d56ed1333863e0962f441483adc2c43b83105046eb00"
+          },
+          "cube-single-play-v0.npz": {
+            "bytes": 256728298,
+            "sha256": "80f3b6fd27f4f9d9e9eb6f0d07d6951559012f45b1e15ea4046ef8ecd8d3684e"
+          }
+        }
+      },
+      "git_head": "04cbbf64a263b6bd92bece81827677c2e49b6115",
+      "git_status": "## feature/tensorboard-local-ogbench-runs...origin/feature/tensorboard-local-ogbench-runs\n M main.py\n M utils/flax_utils.py\n M utils/log_utils.py\n?? runs/reports/ogbench_paper_repro/\n?? scripts/diagnose_ogbench_paper_repro.py\n?? scripts/jax_cuda_probe.py\n?? scripts/submit_ogbench_cube_single_repro_unity.py\n?? scripts/submit_ogbench_repro_ab_unity.py\n?? scripts/summarize_ogbench_paper_repro.py",
+      "packages": {
+        "distrax": "0.1.5",
+        "dm_control": "1.0.40",
+        "flax": "0.10.7",
+        "gymnasium": "0.29.1",
+        "jax": "0.6.2",
+        "jaxlib": "0.6.2",
+        "ml_collections": "1.1.0",
+        "mujoco": "3.8.0",
+        "numpy": "2.2.6",
+        "ogbench": "1.1.0",
+        "optax": "0.2.8"
+      },
+      "python": "3.10.16 | packaged by conda-forge | (main, Apr  8 2025, 20:53:32) [GCC 13.3.0]",
+      "repo_path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs"
+    }
+  ]
+}

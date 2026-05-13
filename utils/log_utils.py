@@ -15,24 +15,30 @@ from PIL import Image, ImageEnhance
 class CsvLogger:
     """CSV logger for logging metrics to a CSV file."""
 
-    def __init__(self, path):
+    def __init__(self, path, append=False):
         self.path = path
         self.header = None
         self.file = None
+        self.append = append
         self.disallowed_types = (wandb.Image, wandb.Video, wandb.Histogram)
+
+    def _open(self, row):
+        if self.append and os.path.exists(self.path) and os.path.getsize(self.path) > 0:
+            with open(self.path) as f:
+                self.header = f.readline().strip().split(',')
+            self.file = open(self.path, 'a')
+            return
+
+        self.file = open(self.path, 'w')
+        self.header = [k for k, v in row.items() if not isinstance(v, self.disallowed_types)]
+        self.file.write(','.join(self.header) + '\n')
 
     def log(self, row, step):
         row['step'] = step
         if self.file is None:
-            self.file = open(self.path, 'w')
-            if self.header is None:
-                self.header = [k for k, v in row.items() if not isinstance(v, self.disallowed_types)]
-                self.file.write(','.join(self.header) + '\n')
-            filtered_row = {k: v for k, v in row.items() if not isinstance(v, self.disallowed_types)}
-            self.file.write(','.join([str(filtered_row.get(k, '')) for k in self.header]) + '\n')
-        else:
-            filtered_row = {k: v for k, v in row.items() if not isinstance(v, self.disallowed_types)}
-            self.file.write(','.join([str(filtered_row.get(k, '')) for k in self.header]) + '\n')
+            self._open(row)
+        filtered_row = {k: v for k, v in row.items() if not isinstance(v, self.disallowed_types)}
+        self.file.write(','.join([str(filtered_row.get(k, '')) for k in self.header]) + '\n')
         self.file.flush()
 
     def close(self):

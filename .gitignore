@@ -12,3 +12,15 @@ dist/
 .pytest_cache/
 exp/
 wandb/
+runs/tmp/
+output/jupyter-notebook/cache/
+output/jupyter-notebook/artifacts/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+events.out.tfevents.*
+checkpoints/

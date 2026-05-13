@@ -189,6 +189,7 @@ def main(_):
         visualize_info=False,
     )
     env = ThirdPersonRenderWrapper(base_env, camera=FLAGS.render_camera)
+    env.action_space.seed(FLAGS.seed)
     oracles = build_oracles(env)
     has_button_states = hasattr(env.unwrapped, '_cur_button_states')
 

@@ -128,8 +128,24 @@ class FrameStackWrapper(gymnasium.Wrapper):
         return self.get_observation(), reward, terminated, truncated, info
 
 
+def _truncate_dataset(dataset, max_size):
+    """Return a compact dataset prefix without views retaining the full arrays."""
+    if max_size is None or max_size == np.inf:
+        return dataset
+
+    max_size = int(max_size)
+    if dataset['observations'].shape[0] <= max_size:
+        return dataset
+
+    return {
+        k: np.array(v[:max_size], copy=True, order='C')
+        for k, v in dataset.items()
+    }
+
+
 def make_env_and_datasets(env_name, frame_stack=None, action_clip_eps=1e-5,
-                          reward_free=False, max_size=np.inf, dataset_dir=None):
+                          reward_free=False, max_size=np.inf, dataset_dir=None,
+                          include_third_person=True):
     """Make Offline RL environment and datasets.
 
     Args:
@@ -159,13 +175,11 @@ def make_env_and_datasets(env_name, frame_stack=None, action_clip_eps=1e-5,
         dataset_kwargs = {}
         if dataset_dir is not None:
             dataset_kwargs['dataset_dir'] = dataset_dir
+        if env_name.startswith('bridge-'):
+            dataset_kwargs['include_third_person'] = include_third_person
         _, train_dataset, val_dataset = ogbench_utils.make_env_and_datasets(env_name, **dataset_kwargs)
-        if train_dataset['observations'].shape[0] > max_size:
-            for k, v in train_dataset.items():
-                train_dataset[k] = v[:max_size]
-        if val_dataset['observations'].shape[0] > max_size:
-            for k, v in val_dataset.items():
-                val_dataset[k] = v[:max_size]
+        train_dataset = _truncate_dataset(train_dataset, max_size)
+        val_dataset = _truncate_dataset(val_dataset, max_size)
 
         env = ogbench_utils.make_env_and_datasets(env_name, env_only=True, **dataset_kwargs)
         eval_env = ogbench_utils.make_env_and_datasets(env_name, env_only=True, **dataset_kwargs)

@@ -1,0 +1,68 @@
+{
+  "checkpoint_interval": 50000,
+  "checkpoint_keep": 5,
+  "constraint": "h100|a100-80g|l40s|a100-40g",
+  "cpus": 8,
+  "created_at": "20260507_052910",
+  "data_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/data/bridge_cube_single_play_20260506_004058",
+  "dependency": null,
+  "eval_episodes": 50,
+  "eval_interval": 50000,
+  "finetuning_steps": 500000,
+  "gpus": 1,
+  "job_id": "56932761",
+  "local_run_root": "runs/unity_cross_modal_tcn_method_b/cross_modal_tcn_b256_ft_pack_short_20260507_052910",
+  "mem": "120G",
+  "partition": "gpu,gpu-preempt",
+  "pretraining_steps": 1000000,
+  "qos": "short",
+  "remote_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs",
+  "remote_run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/cross_modal_tcn_b256_ft_pack_short_20260507_052910",
+  "remote_script": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/cross_modal_tcn_b256_ft_pack_short_20260507_052910/slurm/b256_ft_pack.sbatch",
+  "resume_checkpoint_path": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/cross_modal_tcn_method_b_diag_20260506_232914/runs/cross_modal_tcn_method_b_diagnostic/task1_seed0_1000kpre_0kft/checkpoints",
+  "run_order": [
+    {
+      "seed": 0,
+      "task": 4
+    },
+    {
+      "seed": 1,
+      "task": 4
+    },
+    {
+      "seed": 0,
+      "task": 1
+    },
+    {
+      "seed": 1,
+      "task": 1
+    },
+    {
+      "seed": 0,
+      "task": 5
+    },
+    {
+      "seed": 1,
+      "task": 5
+    },
+    {
+      "seed": 0,
+      "task": 3
+    },
+    {
+      "seed": 1,
+      "task": 3
+    },
+    {
+      "seed": 0,
+      "task": 2
+    },
+    {
+      "seed": 1,
+      "task": 2
+    }
+  ],
+  "shared_latent_dim": 256,
+  "time_limit": "03:50:00",
+  "wandb_run_group": "cross_modal_tcn_b256_ft_pack_short"
+}

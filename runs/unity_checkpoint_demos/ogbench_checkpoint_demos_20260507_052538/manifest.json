@@ -1,0 +1,12 @@
+{
+  "constraint": "h100|a100|l40s|a40",
+  "created_at": "20260507_052538",
+  "eval_episodes": 10,
+  "gres": "gpu:1",
+  "local_run_root": "runs/unity_checkpoint_demos/ogbench_checkpoint_demos_20260507_052538",
+  "partition": "gpu,gpu-preempt",
+  "qos": "",
+  "remote_run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/ogbench_checkpoint_demos_20260507_052538",
+  "time_limit": "01:30:00",
+  "video_episodes": 2
+}

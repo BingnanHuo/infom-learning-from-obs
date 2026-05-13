@@ -1,0 +1,34 @@
+{
+  "constraint": "a100",
+  "cpus_per_task": 8,
+  "created_at": "2026-05-06T02:35:56.883301+00:00",
+  "data_home": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/home",
+  "data_policy": "official OGBench cube-single-play-v0 pretraining; upstream InFOM cube-single-play-ft-v0 generation",
+  "exclude": null,
+  "mem": "32G",
+  "partition": "gpu",
+  "probe_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-learning-from-obs",
+  "python": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/tools/miniforge3/envs/infom-obs/bin/python",
+  "run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556",
+  "scripts": {
+    "prepare": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/slurm/prepare_data.sbatch",
+    "smoke": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/slurm/smoke.sbatch",
+    "train_t1_s0": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/slurm/train_t1_s0.sbatch",
+    "train_t1_s1": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/slurm/train_t1_s1.sbatch",
+    "train_t1_s2": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/slurm/train_t1_s2.sbatch",
+    "train_t1_s3": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/unity_cube_single_paper_recipe_20260506_023556/slurm/train_t1_s3.sbatch"
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "stage": "all",
+  "tasks": [
+    1
+  ],
+  "time_limit": "12:00:00",
+  "upstream_commit": "ed0761d7a349fb34b201071f98ac88b6d91cafe2",
+  "upstream_repo": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/repos/infom-upstream-ed0761d"
+}

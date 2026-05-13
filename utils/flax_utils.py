@@ -2,6 +2,7 @@ import functools
 import glob
 import os
 import pickle
+import re
 from typing import Any, Dict, Mapping, Sequence
 
 import flax
@@ -200,3 +201,93 @@ def restore_agent(agent, restore_path, restore_epoch):
     print(f'Restored from {restore_path}')
 
     return agent
+
+
+def _atomic_pickle_dump(obj, path):
+    """Atomically write a pickle file."""
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp_path = f'{path}.tmp.{os.getpid()}'
+    with open(tmp_path, 'wb') as f:
+        pickle.dump(obj, f)
+    os.replace(tmp_path, path)
+
+
+def _checkpoint_step(path):
+    match = re.search(r'training_state_(\d+)\.pkl$', os.path.basename(path))
+    return int(match.group(1)) if match else -1
+
+
+def find_latest_training_checkpoint(checkpoint_path):
+    """Return the latest full training checkpoint file, or None if absent."""
+
+    if checkpoint_path is None:
+        return None
+
+    candidates = glob.glob(checkpoint_path)
+    if len(candidates) > 1:
+        raise ValueError(
+            f'Expected checkpoint_path to match at most one file or directory, '
+            f'but found {len(candidates)} candidates: {candidates}'
+        )
+    if len(candidates) == 1 and os.path.isfile(candidates[0]):
+        return candidates[0]
+    if len(candidates) == 1 and os.path.isdir(candidates[0]):
+        checkpoint_path = candidates[0]
+
+    latest_path = os.path.join(checkpoint_path, 'latest.pkl')
+    if os.path.exists(latest_path):
+        return latest_path
+
+    candidates = glob.glob(os.path.join(checkpoint_path, 'training_state_*.pkl'))
+    if not candidates:
+        return None
+    return max(candidates, key=_checkpoint_step)
+
+
+def save_training_checkpoint(agent, checkpoint_dir, step, training_state, keep=3):
+    """Save a full restartable training checkpoint.
+
+    The checkpoint intentionally includes both model state and training-loop state.
+    Existing lightweight agent checkpoints remain handled by ``save_agent``.
+    """
+
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    save_dict = dict(
+        version=1,
+        step=int(step),
+        agent=flax.serialization.to_state_dict(agent),
+        training_state=training_state,
+    )
+    save_path = os.path.join(checkpoint_dir, f'training_state_{int(step):010d}.pkl')
+    _atomic_pickle_dump(save_dict, save_path)
+    _atomic_pickle_dump(save_dict, os.path.join(checkpoint_dir, 'latest.pkl'))
+
+    if keep is not None and keep > 0:
+        candidates = sorted(
+            glob.glob(os.path.join(checkpoint_dir, 'training_state_*.pkl')),
+            key=_checkpoint_step,
+        )
+        for old_path in candidates[:-keep]:
+            try:
+                os.remove(old_path)
+            except FileNotFoundError:
+                pass
+
+    print(f'Saved full training checkpoint to {save_path}', flush=True)
+    return save_path
+
+
+def restore_training_checkpoint(agent, checkpoint_path):
+    """Restore an agent and training-loop state from a full checkpoint."""
+
+    checkpoint_path = find_latest_training_checkpoint(checkpoint_path)
+    if checkpoint_path is None:
+        return agent, None, None
+
+    with open(checkpoint_path, 'rb') as f:
+        load_dict = pickle.load(f)
+
+    agent = flax.serialization.from_state_dict(agent, load_dict['agent'])
+    print(f'Restored full training checkpoint from {checkpoint_path}', flush=True)
+    return agent, load_dict, checkpoint_path

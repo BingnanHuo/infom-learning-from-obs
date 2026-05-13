@@ -1,0 +1,14 @@
+{
+  "constraint": "h100|a100|l40s|a40",
+  "created_at": "20260507_052546",
+  "eval_episodes": 10,
+  "gres": "gpu:1",
+  "job_id": "56931963",
+  "local_run_root": "runs/unity_checkpoint_demos/ogbench_checkpoint_demos_20260507_052546",
+  "partition": "gpu,gpu-preempt",
+  "qos": "",
+  "remote_run_root": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/ogbench_checkpoint_demos_20260507_052546",
+  "remote_script": "/work/pi_mengfanxu_umass_edu/bhuo_umass_edu/infom-learning-from-obs/runs/ogbench_checkpoint_demos_20260507_052546/slurm/checkpoint_demos.sbatch",
+  "time_limit": "01:30:00",
+  "video_episodes": 2
+}
